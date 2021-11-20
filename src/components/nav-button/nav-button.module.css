@@ -1,0 +1,13 @@
+.button {
+	display: flex;
+	color: var(--text-primary-light);
+    font-size: 16px;
+	line-height: 24px;
+	letter-spacing: 0em;
+	text-align: left;
+    text-decoration: none;
+}
+
+.secondary {
+    color: var(--text-dark-grey);
+}

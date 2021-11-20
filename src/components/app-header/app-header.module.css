@@ -1,0 +1,18 @@
+.wrapper {
+	max-width: 1280px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+}
+
+.logo {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 290px;
+    height: 50px;
+	margin: auto;
+}
