@@ -4,12 +4,7 @@ import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktiku
 import PropTypes from "prop-types";
 import { ingredientsType } from "../../utils/types";
 
-<<<<<<< HEAD
 const BurgerConstructor = ({burgerData, openModal}) => {
-=======
-const BurgerConstructor = (props) => {
-    const { burgerData, openModal } = props;
->>>>>>> 4869cb788ebb085c3bb8db311816873b0f8f3102
     const mainElements = burgerData.filter((item) => item.type === "main" || item.type === "sauce");
     const total = burgerData.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
 
@@ -24,11 +19,7 @@ const BurgerConstructor = (props) => {
         } else if (position === "bottom") {
             positionText = " (низ)";
         }
-<<<<<<< HEAD
         const isLocked = type === "bun";
-=======
-        const isLocked = type === "bun" ? true : false;
->>>>>>> 4869cb788ebb085c3bb8db311816873b0f8f3102
 
         return (
             <li className={`${burgerConstructorStyles.mainElementsItem} ${isLocked && "pl-8"}`} key={element._id}>

@@ -9,11 +9,7 @@ const SectionIngredients = (props) => {
     
     // временное решение для отображения количества, убрать при появлении глобального state
     const ingredientsWithQuantity = (a, b, prop) => {
-<<<<<<< HEAD
         let reduced = a.filter(aitem => !b.find(bitem => aitem[prop] === bitem[prop]))
-=======
-        var reduced = a.filter(aitem => !b.find(bitem => aitem[prop] === bitem[prop]))
->>>>>>> 4869cb788ebb085c3bb8db311816873b0f8f3102
         return reduced.concat(b).reverse();
     }
     const ingredients = ingredientsWithQuantity(burgerData, cart, '_id').filter((item) => item.type === type);
