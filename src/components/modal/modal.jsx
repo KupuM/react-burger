@@ -6,7 +6,12 @@ import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { MODAL_ROOT } from "../../utils/consts";
 
+<<<<<<< HEAD
 const Modal = ({onClose, children}) => {
+=======
+const Modal = (props) => {
+    const { onClose, children } = props;
+>>>>>>> 4869cb788ebb085c3bb8db311816873b0f8f3102
 
     const handlePressEscape = (e) => {
         if (e.key === "Escape") {
@@ -33,6 +38,10 @@ const Modal = ({onClose, children}) => {
 };
 
 Modal.propTypes = {
+<<<<<<< HEAD
+=======
+    title: PropTypes.string.isRequired,
+>>>>>>> 4869cb788ebb085c3bb8db311816873b0f8f3102
     onClose: PropTypes.func.isRequired,
     children: PropTypes.element.isRequired,
 };

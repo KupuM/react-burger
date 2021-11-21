@@ -1,5 +1,9 @@
 import React from "react";
 import ingredientDetailsStyle from "./ingredient-details.module.css";
+<<<<<<< HEAD
+=======
+import PropTypes from "prop-types";
+>>>>>>> 4869cb788ebb085c3bb8db311816873b0f8f3102
 import { ingredientsType } from "../../utils/types";
 
 const IngredientDetails = (props) => {
@@ -28,9 +32,15 @@ const IngredientDetails = (props) => {
         },
     ];
 
+<<<<<<< HEAD
     const ingredientPropsTemplate = ingredientPropsConstructor.map(({ title, measure, prop }, index) => {
         return (
             <div className={`${ingredientDetailsStyle.propItem} mr-5`} key={index}>
+=======
+    const ingredientPropsTemplate = ingredientPropsConstructor.map(({ title, measure, prop }) => {
+        return (
+            <div className={`${ingredientDetailsStyle.propItem} mr-5`}>
+>>>>>>> 4869cb788ebb085c3bb8db311816873b0f8f3102
                 <p className="text text_type_main-default text_color_inactive">
                     {title}, {measure}
                 </p>
@@ -54,7 +64,11 @@ const IngredientDetails = (props) => {
 };
 
 IngredientDetails.propTypes = {
+<<<<<<< HEAD
     ingredient: ingredientsType.isRequired,
+=======
+    ingredient: PropTypes.arrayOf(ingredientsType).isRequired,
+>>>>>>> 4869cb788ebb085c3bb8db311816873b0f8f3102
 }  
 
 export default IngredientDetails;

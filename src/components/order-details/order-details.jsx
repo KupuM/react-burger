@@ -3,7 +3,12 @@ import orderDetailsStyles from "./order-details.module.css";
 import done from "../../images/done.png";
 import PropTypes from "prop-types";
 
+<<<<<<< HEAD
 const OrderDeatils = ({orderId, orderStatus}) => {
+=======
+const OrderDeatils = (props) => {
+    const { orderId, orderStatus } = props;
+>>>>>>> 4869cb788ebb085c3bb8db311816873b0f8f3102
     const waitingBlock = (
         <>
             <img src={done} alt="готово" className={`${orderDetailsStyles.image} pt-15`} />
