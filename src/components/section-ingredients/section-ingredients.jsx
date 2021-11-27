@@ -7,7 +7,7 @@ import { ingredientsType, cartType } from "../../utils/types";
 const SectionIngredients = (props) => {
     const { burgerData, title, type, onClickItem, cart } = props;
     
-    // временное решение для отображения количества, убрать при появлении глобального state
+    // временное решение для отображения количества, убрать при появлении redux store
     const ingredientsWithQuantity = (a, b, prop) => {
         let reduced = a.filter(aitem => !b.find(bitem => aitem[prop] === bitem[prop]))
         return reduced.concat(b).reverse();

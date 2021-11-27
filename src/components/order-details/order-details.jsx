@@ -3,7 +3,7 @@ import orderDetailsStyles from "./order-details.module.css";
 import done from "../../images/done.png";
 import PropTypes from "prop-types";
 
-const OrderDeatils = ({orderId, orderStatus}) => {
+const OrderDeatils = ({orderId, orderSuccess}) => {
     const waitingBlock = (
         <>
             <img src={done} alt="готово" className={`${orderDetailsStyles.image} pt-15`} />
@@ -18,14 +18,14 @@ const OrderDeatils = ({orderId, orderStatus}) => {
         <div className={`${orderDetailsStyles.container} pb-30`}>
             <p className="text text_type_digits-large pt-30">{orderId}</p>
             <p className="text text_type_main-medium pt-8">идентификатор заказа</p>
-            {orderStatus === 'waiting' && waitingBlock}
+            {orderSuccess && waitingBlock}
         </div>
     );
 };
 
 OrderDeatils.propTypes = {
-    orderId: PropTypes.string.isRequired,
-    orderStatus: PropTypes.string.isRequired,
+    orderId: PropTypes.number,
+    orderStatus: PropTypes.bool,
 }
 
 export default OrderDeatils;

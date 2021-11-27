@@ -11,7 +11,7 @@ const IngredientsItem = (props) => {
     } = props;
 
     const handleClickItem = () => {
-        onClick('modalIngredient', _id);
+        onClick('modalIngredient', {ingredientId: _id});
     };
 
     return (
