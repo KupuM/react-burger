@@ -7,7 +7,7 @@ const SectionNav = (props) => {
 	const [ activeTab, setActiveTab ] = useState('bun');
 
     const setTab = (tab) => {
-        setActiveTab(true);
+        setActiveTab(tab);
         const element = document.getElementById(tab);
         element && element.scrollIntoView({block: "start", behavior: "smooth" });
     }

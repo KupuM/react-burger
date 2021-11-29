@@ -1,15 +1,23 @@
-import React from "react";
+import React, {useContext} from "react";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { ingredientsType } from "../../utils/types";
+import { BurgerContext } from "../../utils/context"
+import { getOrderData } from "../../services/api-service"
 
-const BurgerConstructor = ({burgerData, openModal}) => {
+const BurgerConstructor = ({openModal}) => {
+    const burgerData = useContext(BurgerContext);
     const mainElements = burgerData.filter((item) => item.type === "main" || item.type === "sauce");
     const total = burgerData.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
+    const burgerConstructorIngredientsIds = burgerData.map((item) => item._id);
 
-    const handleOpenModal = () => {
-        openModal('modalOrder');
+    const handleOpenModal = async () => {
+        const orderData = await getOrderData(burgerConstructorIngredientsIds);
+        if (orderData.order.number) {
+            openModal('modalOrder', {orderNumber: orderData.order.number, orderSuccess: orderData.success})
+        } else {
+            openModal('modalOrder', {error: true})
+        }
     };
 
     const getConstructorElement = (element, type, position) => {
@@ -63,7 +71,6 @@ const BurgerConstructor = ({burgerData, openModal}) => {
 };
 
 BurgerConstructor.propTypes = {
-    burgerData: PropTypes.arrayOf(ingredientsType).isRequired,
     openModal: PropTypes.func.isRequired,
 }  
 

@@ -6,10 +6,11 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import Spinner from "../spinner/spinner";
 import ErrorIndicator from "../error-indicator/error-indicator";
 import cart from "../../mocks/cart.json";
-import { INGREDIENTS_URL } from "../../utils/consts";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
+import { BurgerContext } from "../../utils/context";
+import { getBurgerData } from "../../services/api-service";
 
 const App = () => {
     const [burgerData, setBurgerData] = useState({
@@ -22,9 +23,9 @@ const App = () => {
         type: null
     });
     const [ingredientId, setIngredientId] = useState();
-    const [order] = useState({
-        id: "034536",
-        status: "waiting"
+    const [order, setOrder] = useState({
+        id: null,
+        success: false
     })
 
     const ingredient = ingredientId && burgerData.data.find((item) => item._id === ingredientId);
@@ -32,12 +33,15 @@ const App = () => {
         modal.type === "modalIngredient" ? (
             <IngredientDetails ingredient={ingredient} />
         ) : (
-            <OrderDetails orderId={order.id} orderStatus={order.status} />
+            <OrderDetails orderId={order.id} orderSuccess={order.success} />
         );
 
-    const handleOpenModal = (modalType, id) => {
+    const handleOpenModal = (modalType, payload) => {
+        const { ingredientId, orderNumber, orderSuccess, error } = payload;
+        if (error) return setError(true);
         setModal({isShow: true, type: modalType});
-        setIngredientId(id);
+        setIngredientId(ingredientId);
+        setOrder({id: orderNumber, success: orderSuccess});
     };
 
     const handleCloseModal = () => {
@@ -45,20 +49,15 @@ const App = () => {
     };
 
     useEffect(() => {
-        const getBurgerData = async () => {
-            try {
-                setBurgerData({data: null, isLoading: true});
-                const res = await fetch(INGREDIENTS_URL);
-                const data = await res.json();
-                setBurgerData({data: data.data, isLoading: false});
-            } catch (error) {
-                setBurgerData({data: null, isLoading: false});
+        setBurgerData({data: null, isLoading: true});
+        getBurgerData()
+            .then((res) => {
+                setBurgerData({data: res.data, isLoading: false})
+            })
+            .catch((error) => {
                 setError(true);
-                console.log(error);
-            }
-        };
-
-        getBurgerData();
+                setBurgerData({data: null, isLoading: false});
+            })
     }, []);
 
     return (
@@ -68,12 +67,12 @@ const App = () => {
                 {burgerData.isLoading && <Spinner />}
                 {error && <ErrorIndicator />}
                 {!burgerData.isLoading && !error && (
-                    <>
-                        <BurgerIngredients burgerData={burgerData.data} openModal={handleOpenModal} cart={cart} />
-                        <BurgerConstructor burgerData={burgerData.data} openModal={handleOpenModal} />
-                    </>
+                    <BurgerContext.Provider value={burgerData.data}>
+                        <BurgerIngredients openModal={handleOpenModal} cart={cart} />
+                        <BurgerConstructor openModal={handleOpenModal} />
+                        {modal.isShow && <Modal onClose={handleCloseModal}>{modalContent}</Modal>}
+                    </BurgerContext.Provider>
                 )}
-                {modal.isShow && <Modal onClose={handleCloseModal}>{modalContent}</Modal>}
             </main>
         </div>
     );
