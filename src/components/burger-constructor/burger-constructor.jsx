@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { ingredientsType } from "../../utils/types";
 import { BurgerContext } from "../../utils/context"
 import { getOrderData } from "../../services/api-service"
 
@@ -72,7 +71,6 @@ const BurgerConstructor = ({openModal}) => {
 };
 
 BurgerConstructor.propTypes = {
-    burgerData: PropTypes.arrayOf(ingredientsType),
     openModal: PropTypes.func.isRequired,
 }  
 

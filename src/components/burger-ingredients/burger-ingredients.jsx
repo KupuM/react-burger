@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import SectionNav from "../section-nav/section-nav";
 import SectionIngredients from "../section-ingredients/section-ingredients";
 import PropTypes from "prop-types";
-import { ingredientsType, cartType } from "../../utils/types";
+import { cartType } from "../../utils/types";
+import { BurgerContext } from "../../utils/context"
 
 const sectionConstructor = [
     {
@@ -20,8 +21,8 @@ const sectionConstructor = [
     }
 ];
 
-const BurgerIngredients = (props) => {
-    const { burgerData, openModal, cart } = props;
+const BurgerIngredients = ({ openModal, cart }) => {
+    const burgerData = useContext(BurgerContext);
 
     return (
         <section className={burgerIngredientsStyles.leftBlock}>
@@ -46,7 +47,6 @@ const BurgerIngredients = (props) => {
 };
 
 BurgerIngredients.propTypes = {
-    burgerData: PropTypes.arrayOf(ingredientsType).isRequired,
     openModal: PropTypes.func.isRequired,
     cart: PropTypes.arrayOf(cartType)
 }  

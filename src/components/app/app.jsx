@@ -67,13 +67,11 @@ const App = () => {
                 {burgerData.isLoading && <Spinner />}
                 {error && <ErrorIndicator />}
                 {!burgerData.isLoading && !error && (
-                    <>
-                        <BurgerIngredients burgerData={burgerData.data} openModal={handleOpenModal} cart={cart} />
-                        <BurgerContext.Provider value={burgerData.data}>
-                            <BurgerConstructor openModal={handleOpenModal} />
-                            {modal.isShow && <Modal onClose={handleCloseModal}>{modalContent}</Modal>}
-                        </BurgerContext.Provider>
-                    </>
+                    <BurgerContext.Provider value={burgerData.data}>
+                        <BurgerIngredients openModal={handleOpenModal} cart={cart} />
+                        <BurgerConstructor openModal={handleOpenModal} />
+                        {modal.isShow && <Modal onClose={handleCloseModal}>{modalContent}</Modal>}
+                    </BurgerContext.Provider>
                 )}
             </main>
         </div>
