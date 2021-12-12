@@ -12,3 +12,7 @@ body {
     font-family: 'JetBrains Mono', Arial, Helvetica, sans-serif;
     color: var(--text-primary-light);
 }
+
+.constructor-element__text {
+    min-width: 250px;
+}

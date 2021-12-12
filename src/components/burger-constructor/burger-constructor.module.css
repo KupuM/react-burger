@@ -7,6 +7,10 @@
     width: 600px;
 }
 
+.wrapperHover {
+    background:rgba(255, 255, 255, 0.05);
+}
+
 ul {
     padding-left: 16px;
 }
@@ -19,6 +23,15 @@ ul {
     list-style-type: none;
 }
 
+.mainElements li:nth-last-child(-n+5):first-child,
+.mainElements li:nth-last-child(-n+5):first-child ~ li {
+    padding-right: 16px;
+}
+
+.mainElements li {
+    padding-right: 8px;
+}
+
 .mainElements::-webkit-scrollbar {
     width: 8px;
 }
@@ -29,20 +42,6 @@ ul {
 
 .mainElements::-webkit-scrollbar-thumb {
     background-color: var(--text-dark-grey);
-}
-
-.mainElementsItem {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.dragIcon {
-    width: 32px;
-    display: flex;
-    align-items: center;
-    padding-right: 8px;
-    cursor: pointer;
 }
 
 .container {
