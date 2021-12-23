@@ -3,3 +3,9 @@
     align-items: center;
     justify-content: center;
 }
+
+.spinner {
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+}

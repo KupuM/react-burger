@@ -13,6 +13,8 @@ const ingredientType = {
     image_mobile: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
     __v: PropTypes.number.isRequired,
+    counter: PropTypes.number,
+    dragId: PropTypes.string
 }
 
 export const ingredientsType = PropTypes.shape(ingredientType);

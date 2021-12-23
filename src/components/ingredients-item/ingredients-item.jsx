@@ -2,6 +2,7 @@ import React from "react";
 import ingredientsItemStyles from "./ingredients-item.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { useDrag } from "react-dnd";
 
 const IngredientsItem = (props) => {
     const {
@@ -9,18 +10,26 @@ const IngredientsItem = (props) => {
         onClick,
         quantity,
     } = props;
+    const [{opacity}, dragRef] = useDrag({
+        type: "ingredients",
+        item: props.item,
+        collect: monitor => ({
+            opacity: monitor.isDragging() ? 0.7 : 1
+        })
+    });
 
     const handleClickItem = () => {
-        onClick('modalIngredient', {ingredientId: _id});
+        onClick('modalIngredient', _id);
     };
 
     return (
-        <li className={ingredientsItemStyles.item} onClick={handleClickItem}>
-            {quantity && (
-                <div className={ingredientsItemStyles.count}>
+        <li className={ingredientsItemStyles.item} onClick={handleClickItem} style={{opacity}}>
+            {quantity > 0 && (
+                <div className={ingredientsItemStyles.count} >
                     <Counter count={quantity} size="default" />
                 </div>
             )}
+            <div className={ingredientsItemStyles.dragBlock} ref={dragRef}>
             <img
                 className={`${ingredientsItemStyles.image} mb-1 ml-4 mr-4`}
                 src={image}
@@ -35,6 +44,7 @@ const IngredientsItem = (props) => {
             <p className={`${ingredientsItemStyles.name} text text_type_main-default`}>
                 {name}
             </p>
+            </div>
         </li>
     );
 };

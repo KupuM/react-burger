@@ -5,6 +5,11 @@
     cursor: pointer;
 }
 
+.dragBlock {
+    position: relative;
+    z-index: 1;
+}
+
 .price {
     display: flex;
     align-items: center;

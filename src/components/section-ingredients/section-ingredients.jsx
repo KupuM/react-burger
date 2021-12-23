@@ -2,20 +2,14 @@ import React from "react";
 import sectionIngredientsStyles from "./section-ingredients.module.css";
 import IngredientsItem from "../ingredients-item/ingredients-item";
 import PropTypes from "prop-types";
-import { ingredientsType, cartType } from "../../utils/types";
+import { ingredientsType } from "../../utils/types";
 
 const SectionIngredients = (props) => {
-    const { burgerData, title, type, onClickItem, cart } = props;
-    
-    // временное решение для отображения количества, убрать при появлении redux store
-    const ingredientsWithQuantity = (a, b, prop) => {
-        let reduced = a.filter(aitem => !b.find(bitem => aitem[prop] === bitem[prop]))
-        return reduced.concat(b).reverse();
-    }
-    const ingredients = ingredientsWithQuantity(burgerData, cart, '_id').filter((item) => item.type === type);
+    const { burgerData, title, type, onClickItem } = props;
+    const ingredients = burgerData.filter((item) => item.type === type);
     
     return (
-        <section className={sectionIngredientsStyles.wrapper}>
+        <>
             <h3 className="text text_type_main-medium mb-6" id={type}>
                 {title}
             </h3>
@@ -26,12 +20,12 @@ const SectionIngredients = (props) => {
                             item={item}
                             key={item._id}
                             onClick={onClickItem}
-                            quantity={item.quantity}
+                            quantity={item.counter}
                         />
                     );
                 })}
             </ul>
-        </section>
+        </>
     );
 };
 
@@ -40,7 +34,6 @@ SectionIngredients.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     onClickItem: PropTypes.func.isRequired,
-    cart: PropTypes.arrayOf(cartType)
 }
 
 export default SectionIngredients;
