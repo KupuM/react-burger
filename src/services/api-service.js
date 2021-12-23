@@ -1,4 +1,4 @@
-import { API_URL, INGREDIENTS, ORDERS } from "../utils/consts";
+import { API_URL, INGREDIENTS, ORDERS } from "../utils/constants";
 
 export const getBurgerData = async () => {
     try {
@@ -9,7 +9,7 @@ export const getBurgerData = async () => {
     }
 };
 
-export const getOrderData = async (ingredients, setError) => {
+export const getOrderData = async (ingredients) => {
     try {
         const res = await fetch(API_URL + ORDERS, {
             method: 'POST',
@@ -20,8 +20,7 @@ export const getOrderData = async (ingredients, setError) => {
                 ingredients: ingredients
             })
         });
-        const data = await res.json();
-        return data;
+        return await res.json();
     } catch (error) {
         console.log(error);
     }

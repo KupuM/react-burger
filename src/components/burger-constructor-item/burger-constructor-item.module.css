@@ -1,0 +1,14 @@
+.mainElementsItem {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dragIcon {
+    width: 32px;
+    display: flex;
+    align-items: center;
+    padding-right: 0;
+    cursor: pointer;
+}
