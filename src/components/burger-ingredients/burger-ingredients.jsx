@@ -21,7 +21,7 @@ const sectionConstructor = [
     }
 ];
 
-const BurgerIngredients = ({ openModal, cart }) => {
+const BurgerIngredients = ({ openModal }) => {
     const burgerData = useContext(BurgerContext);
 
     return (
@@ -37,7 +37,6 @@ const BurgerIngredients = ({ openModal, cart }) => {
                             type={item.type}
                             key={index}
                             onClickItem={openModal}
-                            cart={cart}
                         />
                     );
                 })}
@@ -48,7 +47,6 @@ const BurgerIngredients = ({ openModal, cart }) => {
 
 BurgerIngredients.propTypes = {
     openModal: PropTypes.func.isRequired,
-    cart: PropTypes.arrayOf(cartType)
 }  
 
 export default BurgerIngredients;
