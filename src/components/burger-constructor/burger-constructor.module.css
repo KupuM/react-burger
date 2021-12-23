@@ -19,6 +19,7 @@ ul {
     display: grid;
     overflow: auto;
     row-gap: 16px;
+    width: 585px;
     max-height: 464px;
     list-style-type: none;
 }

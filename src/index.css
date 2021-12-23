@@ -13,6 +13,6 @@ body {
     color: var(--text-primary-light);
 }
 
-.constructor-element__text {
+/* .constructor-element__text {
     min-width: 250px;
-}
+} */

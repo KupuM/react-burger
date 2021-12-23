@@ -5,7 +5,7 @@ import spinner from "../../images/spinner.gif"
 const Spinner = () => {
     return (
         <div className={spinnerStyles.wrapper}>
-            <div className={spinnerStyles.spinner} style={{backgroundImage: `url(${spinner})`}}></div>
+            <div className={spinnerStyles.spinner} style={{backgroundImage: `url(${spinner})`}} />
         </div>
     );
 }

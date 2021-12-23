@@ -1,6 +1,6 @@
 import { 
-    ADD_INGERDIENT_DETAILS,
-    DELETE_INGERDIENT_DETAILS
+    ADD_INGREDIENT_DETAILS,
+    DELETE_INGREDIENT_DETAILS
 } from "../actions/index";
 
 const initialState= {
@@ -9,9 +9,9 @@ const initialState= {
 
 const ingredientDetails = (state = initialState, action) => {
     switch(action.type) {
-        case ADD_INGERDIENT_DETAILS:
+        case ADD_INGREDIENT_DETAILS:
             return {...state, _id: action.payload};
-        case DELETE_INGERDIENT_DETAILS:
+        case DELETE_INGREDIENT_DETAILS:
             return {...initialState};
         default:
             return state;

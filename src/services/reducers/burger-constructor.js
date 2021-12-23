@@ -32,14 +32,13 @@ const burgerConstructor = (state = initialState, action) => {
                     ],
                     otherIngredients: [...state.otherIngredients]
                 }
-            } else {
-                return {
-                    buns: [...state.buns],
-                    otherIngredients: [
-                        ...state.otherIngredients.slice(0, action.payload),
-                        ...state.otherIngredients.slice(action.payload + 1)
-                    ]
-                }
+            }
+            return {
+                buns: [...state.buns],
+                otherIngredients: [
+                    ...state.otherIngredients.slice(0, action.payload),
+                    ...state.otherIngredients.slice(action.payload + 1)
+                ]
             }
         case UPDATE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST:
             return {

@@ -4,7 +4,7 @@ import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { MODAL_ROOT } from "../../utils/consts";
+import { MODAL_ROOT } from "../../utils/constants";
 
 const Modal = ({onClose, children}) => {
 

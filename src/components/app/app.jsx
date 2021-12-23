@@ -11,8 +11,8 @@ import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import {
     getBurgerIngredients,
-    ADD_INGERDIENT_DETAILS,
-    DELETE_INGERDIENT_DETAILS,
+    ADD_INGREDIENT_DETAILS,
+    DELETE_INGREDIENT_DETAILS,
     updateOrderDetails
 } from "../../services/actions/index";
 import { DndProvider } from "react-dnd";
@@ -38,7 +38,7 @@ const App = () => {
 
         if (modalType === "modalIngredient") {
             dispatch({
-                type: ADD_INGERDIENT_DETAILS,
+                type: ADD_INGREDIENT_DETAILS,
                 payload: payload,
             });
         } else {
@@ -49,7 +49,7 @@ const App = () => {
     const handleCloseModal = () => {
         setModal({ ...modal, isShow: false });
         dispatch({
-            type: DELETE_INGERDIENT_DETAILS,
+            type: DELETE_INGREDIENT_DETAILS,
         });
     };
 

@@ -30,6 +30,16 @@ const BurgerIngredients = ({ openModal }) => {
     ];
 
     const burgerData = useSelector(state => state.burgerIngredients.burgerIngredientsData);
+
+    const compareCoordsAndSetActiveItem = (bunTop, sauceTop, mainTop, burgerIngredientsWrapperTop) => {
+        if (bunTop < burgerIngredientsWrapperTop && sauceTop > burgerIngredientsWrapperTop) {
+            setActiveItem('bun');
+        } else if (sauceTop < burgerIngredientsWrapperTop && mainTop > burgerIngredientsWrapperTop) {
+            setActiveItem('sauce');
+        } else if (mainTop < burgerIngredientsWrapperTop) {
+            setActiveItem('main');
+        } 
+    };
     
     const onScroll = () => {
         const burgerIngredientsWrapperTop = document.getElementById('burgerIngredientsWrapper').getBoundingClientRect().top;
@@ -37,9 +47,7 @@ const BurgerIngredients = ({ openModal }) => {
         const sauceTop = refSauce.current.getBoundingClientRect().top - 10
         const mainTop = refMain.current.getBoundingClientRect().top - 10
 
-        bunTop < burgerIngredientsWrapperTop && sauceTop > burgerIngredientsWrapperTop && setActiveItem('bun');
-        sauceTop < burgerIngredientsWrapperTop && mainTop > burgerIngredientsWrapperTop && setActiveItem('sauce');
-        mainTop < burgerIngredientsWrapperTop && setActiveItem('main');
+        compareCoordsAndSetActiveItem(bunTop, sauceTop, mainTop, burgerIngredientsWrapperTop);
     };
 
     return (

@@ -1,4 +1,4 @@
-import { API_URL, INGREDIENTS, ORDERS } from "../utils/consts";
+import { API_URL, INGREDIENTS, ORDERS } from "../utils/constants";
 
 export const getBurgerData = async () => {
     try {
