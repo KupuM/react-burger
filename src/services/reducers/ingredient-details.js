@@ -1,7 +1,7 @@
 import { 
     ADD_INGREDIENT_DETAILS,
     DELETE_INGREDIENT_DETAILS
-} from "../actions/index";
+} from "../actions/burgers";
 
 const initialState= {
     _id: "",

@@ -8,9 +8,10 @@ import {
     ADD_BURGER_CONSTRUCTOR_INGREDIENT,
     UPDATE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST,
     BURGER_INGREDIENT_COUNTER_INCREMENT,
-} from "../../services/actions/index";
+} from "../../services/actions/burgers";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item"
 import uuid from "react-uuid";
+import { useLocation, useHistory } from "react-router-dom";
 
 const BurgerConstructor = ({openModal}) => {
     const {buns, otherIngredients} = useSelector(store => store.burgerConstructor)
@@ -19,6 +20,9 @@ const BurgerConstructor = ({openModal}) => {
         otherIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
     const burgerConstructorIngredientsIds = [...buns.map((item) => item._id), ...otherIngredients.map((item) => item._id)];
     const dispatch = useDispatch();
+    const location = useLocation();
+    const history = useHistory();
+    const accessToken = useSelector(state => state.userInfo.userData.accessToken);
 
     const [{isHover}, dropTarget] = useDrop({
         accept: "ingredients",
@@ -41,7 +45,17 @@ const BurgerConstructor = ({openModal}) => {
     });
 
     const handleOpenModal = () => {
-        openModal('modalOrder', burgerConstructorIngredientsIds)
+        if (!buns[0]) return;
+
+        if (accessToken) {
+            openModal('modalOrder', burgerConstructorIngredientsIds);
+        } else {
+            history.replace({
+                pathname: '/login',
+                state: { background: location}
+            });
+            history.push('/login');
+        }
     };
 
     const hoverClass = isHover && burgerConstructorStyles.wrapperHover;
@@ -82,7 +96,7 @@ const BurgerConstructor = ({openModal}) => {
             <div className={burgerConstructorStyles.total}>
                 <p className="text text_type_main-large pr-2">{total}</p>
                 <span className="pr-10"><CurrencyIcon type="primary" /></span>
-                <Button onClick={buns[0] && handleOpenModal} type="primary" size="large">Оформить заказ</Button>
+                <Button onClick={handleOpenModal} type="primary" size="large">Оформить заказ</Button>
             </div>             
         </section>
     );

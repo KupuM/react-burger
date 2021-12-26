@@ -6,7 +6,7 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 import {
     DELETE_BURGER_CONSTRUCTOR_INGREDIENT,
     BURGER_INGREDIENT_COUNTER_DECREMENT,
-} from "../../services/actions/index";
+} from "../../services/actions/burgers";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 

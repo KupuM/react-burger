@@ -1,0 +1,16 @@
+.profileForm > div, .profileForm > button {
+    margin-top: 24px;
+}
+
+.profileForm > div:first-child {
+    margin-top: 0;
+}
+
+.profileForm > button {
+    margin-top: 24px;
+    margin-bottom: 80px;
+}
+
+.footer {
+    text-align: right;
+}

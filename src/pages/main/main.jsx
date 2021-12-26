@@ -7,68 +7,78 @@ import ErrorIndicator from "../../components/error-indicator/error-indicator";
 import Modal from "../../components/modal/modal";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import OrderDetails from "../../components/order-details/order-details";
-import { BurgerContext } from "../../utils/context";
-import { getBurgerData } from "../../services/api-service";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    getBurgerIngredients,
+    ADD_INGREDIENT_DETAILS,
+    DELETE_INGREDIENT_DETAILS,
+    updateOrderDetails
+} from "../../services/actions/burgers";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const Main = () => {
-    const [burgerData, setBurgerData] = useState({
-        data: null,
-        isLoading: true
-    });
-    const [error, setError] = useState();
     const [modal, setModal] = useState({
         isShow: false,
-        type: null
+        type: null,
     });
-    const [ingredientId, setIngredientId] = useState();
-    const [order, setOrder] = useState({
-        id: null,
-        success: false
-    })
 
-    const ingredient = ingredientId && burgerData.data.find((item) => item._id === ingredientId);
-    const modalContent =
-        modal.type === "modalIngredient" ? (
-            <IngredientDetails ingredient={ingredient} />
-        ) : (
-            <OrderDetails orderId={order.id} orderSuccess={order.success} />
-        );
+    const { burgerIngredientsRequest, burgerIngredientsSuccess, burgerIngredientsError, burgerIngredientsData } =
+        useSelector((state) => state.burgerIngredients);
+
+    const dispatch = useDispatch();
+
+    const getIngredient = (id) => {
+        return burgerIngredientsData.find((item) => item._id === id); 
+    } 
 
     const handleOpenModal = (modalType, payload) => {
-        const { ingredientId, orderNumber, orderSuccess, error } = payload;
-        if (error) return setError(true);
-        setModal({isShow: true, type: modalType});
-        setIngredientId(ingredientId);
-        setOrder({id: orderNumber, success: orderSuccess});
+        setModal({ isShow: true, type: modalType });
+
+        if (modalType === "modalIngredient") {
+            dispatch({
+                type: ADD_INGREDIENT_DETAILS,
+                payload: payload,
+            });
+        } else {
+            dispatch(updateOrderDetails(payload));
+        }
     };
 
     const handleCloseModal = () => {
-        setModal({...modal, isShow: false});
+        setModal({ ...modal, isShow: false });
+        dispatch({
+            type: DELETE_INGREDIENT_DETAILS,
+        });
     };
 
     useEffect(() => {
-        setBurgerData({data: null, isLoading: true});
-        getBurgerData()
-            .then((res) => {
-                setBurgerData({data: res.data, isLoading: false})
-            })
-            .catch((error) => {
-                setError(true);
-                setBurgerData({data: null, isLoading: false});
-            })
-    }, []);
+        dispatch(getBurgerIngredients());
+    }, [dispatch]);
+
+    const ingredientId = useSelector((state) => state.ingredientDetails._id);
+    const { orderDetailsData, updateOrderDetailsRequest, updateOrderDetailsError } = useSelector((state) => state.orderDetails);
+
+    const modalContent =
+        modal.type === "modalIngredient" ? (
+            ingredientId && <IngredientDetails ingredient={getIngredient(ingredientId)} />
+        ) : (
+            <OrderDetails orderDetailsData={orderDetailsData} loading={updateOrderDetailsRequest} error={updateOrderDetailsError} />
+        );
+
     return (
+        
         <main className={mainStyles.wrapper}>
-                {burgerData.isLoading && <Spinner />}
-                {error && <ErrorIndicator />}
-                {!burgerData.isLoading && !error && (
-                    <>
-                        <BurgerIngredients openModal={handleOpenModal} />
-                        <BurgerConstructor openModal={handleOpenModal} />
-                        {modal.isShow && <Modal onClose={handleCloseModal}>{modalContent}</Modal>}
-                    </>
-                )}
-            </main>
+            {burgerIngredientsRequest && <Spinner />}
+            {burgerIngredientsError && <ErrorIndicator />}
+            {burgerIngredientsSuccess && (
+                <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients openModal={handleOpenModal} />
+                    <BurgerConstructor openModal={handleOpenModal} />
+                    {modal.isShow && <Modal onClose={handleCloseModal}>{modalContent}</Modal>}
+                </DndProvider>
+            )}
+        </main>
     );
 }
 

@@ -1,0 +1,28 @@
+.wrapper {
+    max-width: 1280px;
+    margin: 120px auto 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+}
+
+.leftBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.centerBlock {
+    width: 480px;
+    height: fit-content;
+}
+
+.infoText {
+    margin-top: 0;
+    padding-top: 60px;
+    color: var(--text-dark-grey);
+}
+
+.link {
+    color: var(--interface-accent);
+    text-decoration: none;
+}

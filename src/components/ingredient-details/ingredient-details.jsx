@@ -1,9 +1,20 @@
 import React from "react";
 import ingredientDetailsStyle from "./ingredient-details.module.css";
-import { ingredientsType } from "../../utils/types";
+import { useRouteMatch } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Spinner from "../spinner/spinner";
 
-const IngredientDetails = (props) => {
-    const { image_large, name, calories, proteins, fat, carbohydrates } = props.ingredient;
+const IngredientDetails = () => {
+    const { params: {ingredientId} } = useRouteMatch();
+    const burgerIngredientsData = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
+
+    const getIngredient = (id) => {
+        return burgerIngredientsData.find((item) => item._id === id); 
+    }
+
+    if (burgerIngredientsData.length === 0) return <Spinner />;
+    
+    const { image_large, name, calories, proteins, fat, carbohydrates } = getIngredient(ingredientId);
 
     const ingredientPropsConstructor = [
         {
@@ -37,7 +48,7 @@ const IngredientDetails = (props) => {
                 <p className="text text_type_main-default text_color_inactive">{prop}</p>
             </div>
         );
-    });
+    }); 
 
     return (
         <>
@@ -52,9 +63,5 @@ const IngredientDetails = (props) => {
         </>
     );
 };
-
-IngredientDetails.propTypes = {
-    ingredient: ingredientsType.isRequired,
-}  
 
 export default IngredientDetails;
