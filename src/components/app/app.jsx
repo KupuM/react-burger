@@ -22,7 +22,7 @@ const App = () => {
             if (token && !email) {
                 dispatch(refreshToken());
             }
-        }, [dispatch, token, email]);
+        }, []);
 
         const handleCloseModal = () => {
             history.goBack();
