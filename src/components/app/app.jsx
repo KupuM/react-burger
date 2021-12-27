@@ -8,6 +8,7 @@ import ProtectedRoute from "../protected-route/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { getBurgerIngredients } from "../../services/actions/burgers";
+import { getCookie } from "../../utils/cookie";
 
 const App = () => {
     const ModalSwitch = () => {
@@ -18,7 +19,7 @@ const App = () => {
 
         useEffect(() => {
             dispatch(getBurgerIngredients());
-            dispatch(getUser());
+            if (getCookie('accessToken')) dispatch(getUser());
         }, []);
 
         const handleCloseModal = () => {
