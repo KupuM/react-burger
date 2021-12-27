@@ -6,13 +6,11 @@ import Spinner from "../spinner/spinner";
 
 const IngredientDetails = () => {
     const { params: {ingredientId} } = useRouteMatch();
+    const burgerIngredientsData = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
     const location = useLocation();
     const background = location.state && location.state.background;
 
     const getIngredient = (id) => burgerIngredientsData.find((item) => item._id === id); 
-    const burgerIngredientsData = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
-    //const getIngredient = (id) => burgerIngredientsData.find((item) => item._id === id); 
-
 
     if (burgerIngredientsData.length === 0) return <Spinner />;
     
