@@ -1,16 +1,18 @@
 import React from "react";
 import ingredientDetailsStyle from "./ingredient-details.module.css";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Spinner from "../spinner/spinner";
 
 const IngredientDetails = () => {
     const { params: {ingredientId} } = useRouteMatch();
-    const burgerIngredientsData = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
+    const location = useLocation();
+    const background = location.state && location.state.background;
 
-    const getIngredient = (id) => {
-        return burgerIngredientsData.find((item) => item._id === id); 
-    }
+    const getIngredient = (id) => burgerIngredientsData.find((item) => item._id === id); 
+    const burgerIngredientsData = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
+    //const getIngredient = (id) => burgerIngredientsData.find((item) => item._id === id); 
+
 
     if (burgerIngredientsData.length === 0) return <Spinner />;
     
@@ -51,7 +53,7 @@ const IngredientDetails = () => {
     }); 
 
     return (
-        <>
+        <div className={!background && ingredientDetailsStyle.wrapper}>
             <h3 className="text text_type_main-large">
                 Детали ингредиента
             </h3>
@@ -60,7 +62,7 @@ const IngredientDetails = () => {
                 <p className="text text_type_main-medium mt-4 mb-8">{name}</p>
                 <ul className={`${ingredientDetailsStyle.propsList} mb-5`}>{ingredientPropsTemplate}</ul>
             </div>
-        </>
+        </div>
     );
 };
 

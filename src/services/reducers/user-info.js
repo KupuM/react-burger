@@ -220,11 +220,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 getUserRequest: true,
                 getUserSuccess: false,
                 getUserError: false,
-                userData: {
-                    ...state.userData,
-                    email: initialState.userData.email,
-                    name: initialState.userData.name,
-                },
+                userData: state.userData,
             };
         case GET_USER_SUCCESS:
             return {
@@ -257,8 +253,6 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 editUserError: false,
                 userData: {
                     ...state.userData,
-                    email: initialState.userData.email,
-                    name: initialState.userData.name,
                 },
             };
         case EDIT_USER_SUCCESS:

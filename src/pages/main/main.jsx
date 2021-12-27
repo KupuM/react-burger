@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import mainStyles from "./main.module.css";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import Spinner from "../../components/spinner/spinner";
 import ErrorIndicator from "../../components/error-indicator/error-indicator";
 import Modal from "../../components/modal/modal";
-import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import OrderDetails from "../../components/order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    getBurgerIngredients,
     ADD_INGREDIENT_DETAILS,
     DELETE_INGREDIENT_DETAILS,
     updateOrderDetails
@@ -52,19 +50,7 @@ const Main = () => {
         });
     };
 
-    useEffect(() => {
-        dispatch(getBurgerIngredients());
-    }, [dispatch]);
-
-    const ingredientId = useSelector((state) => state.ingredientDetails._id);
     const { orderDetailsData, updateOrderDetailsRequest, updateOrderDetailsError } = useSelector((state) => state.orderDetails);
-
-    const modalContent =
-        modal.type === "modalIngredient" ? (
-            ingredientId && <IngredientDetails ingredient={getIngredient(ingredientId)} />
-        ) : (
-            <OrderDetails orderDetailsData={orderDetailsData} loading={updateOrderDetailsRequest} error={updateOrderDetailsError} />
-        );
 
     return (
         
@@ -73,9 +59,13 @@ const Main = () => {
             {burgerIngredientsError && <ErrorIndicator />}
             {burgerIngredientsSuccess && (
                 <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients openModal={handleOpenModal} />
+                    <BurgerIngredients />
                     <BurgerConstructor openModal={handleOpenModal} />
-                    {modal.isShow && <Modal onClose={handleCloseModal}>{modalContent}</Modal>}
+                    {modal.isShow && (
+                        <Modal onClose={handleCloseModal}>
+                            <OrderDetails orderDetailsData={orderDetailsData} loading={updateOrderDetailsRequest} error={updateOrderDetailsError} />
+                        </Modal>
+                    )}
                 </DndProvider>
             )}
         </main>

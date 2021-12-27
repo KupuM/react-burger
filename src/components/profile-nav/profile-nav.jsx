@@ -3,14 +3,12 @@ import profileNavStyles from './profile-nav.module.css';
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../services/actions/user-info";
-import { deleteCookie } from "../../utils/cookie";
 
 const ProfileNav = () => {
     const dispatch = useDispatch();
 
     const onClickLogout = () => {
         dispatch(logoutUser());
-        deleteCookie('accessToken');
     }
 
     return (

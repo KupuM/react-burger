@@ -50,11 +50,10 @@ const BurgerConstructor = ({openModal}) => {
         if (accessToken) {
             openModal('modalOrder', burgerConstructorIngredientsIds);
         } else {
-            history.replace({
+            history.push({
                 pathname: '/login',
-                state: { background: location}
+                state: { from: location.pathname}
             });
-            history.push('/login');
         }
     };
 

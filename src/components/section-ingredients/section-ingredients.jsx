@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { ingredientsType } from "../../utils/types";
 
 const SectionIngredients = (props) => {
-    const { burgerData, title, type, onClickItem } = props;
+    const { burgerData, title, type } = props;
     const ingredients = burgerData.filter((item) => item.type === type);
     
     return (
@@ -19,7 +19,6 @@ const SectionIngredients = (props) => {
                         <IngredientsItem
                             item={item}
                             key={item._id}
-                            onClick={onClickItem}
                             quantity={item.counter}
                         />
                     );
@@ -33,7 +32,6 @@ SectionIngredients.propTypes = {
     burgerData: PropTypes.arrayOf(ingredientsType).isRequired,
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    onClickItem: PropTypes.func.isRequired,
 }
 
 export default SectionIngredients;

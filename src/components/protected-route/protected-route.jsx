@@ -1,16 +1,17 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, useHistory } from "react-router-dom";
 import { getCookie } from "../../utils/cookie";
 import PropTypes from "prop-types";
 
 const ProtectedRoute = ({children, ...rest}) => {
+    const history = useHistory();
     return (
         <Route
             {...rest}
             render={({location}) => getCookie('accessToken') ? (
                 children
             ) : (
-                <Redirect to="/login" />
+                <Redirect to={history.location.state?.from || "/login"} />
             )}
         />
     )
@@ -18,9 +19,7 @@ const ProtectedRoute = ({children, ...rest}) => {
 
 ProtectedRoute.propTypes = {
     children: PropTypes.element.isRequired,
-    rest: PropTypes.shape({
-        path: PropTypes.object.isRequired,
-    }),
+    path: PropTypes.string.isRequired,
 }
 
 export default ProtectedRoute;

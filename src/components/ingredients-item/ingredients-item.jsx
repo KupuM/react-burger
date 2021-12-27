@@ -26,7 +26,6 @@ const IngredientsItem = (props) => {
                 state: { background: location },
             }}
             className={ingredientsItemStyles.link}
-            key={_id}
         >
             <li className={ingredientsItemStyles.item} style={{ opacity }}>
                 {quantity > 0 && (
