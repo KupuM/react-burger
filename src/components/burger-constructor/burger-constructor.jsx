@@ -14,7 +14,10 @@ import uuid from "react-uuid";
 import { useLocation, useHistory } from "react-router-dom";
 
 const BurgerConstructor = ({openModal}) => {
-    const {buns, otherIngredients} = useSelector(store => store.burgerConstructor)
+    const { 
+        burgerConstructor: {buns, otherIngredients },
+        userInfo: { loggedIn }
+    } = useSelector(store => store)
     const total = 
         buns.map(item => item.price).reduce((prev, curr) => prev + curr, 0) +
         otherIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
@@ -22,7 +25,6 @@ const BurgerConstructor = ({openModal}) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const history = useHistory();
-    const accessToken = useSelector(state => state.userInfo.userData.accessToken);
 
     const [{isHover}, dropTarget] = useDrop({
         accept: "ingredients",
@@ -47,7 +49,7 @@ const BurgerConstructor = ({openModal}) => {
     const handleOpenModal = () => {
         if (!buns[0]) return;
 
-        if (accessToken) {
+        if (loggedIn) {
             openModal('modalOrder', burgerConstructorIngredientsIds);
         } else {
             history.push({

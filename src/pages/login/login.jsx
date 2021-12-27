@@ -10,8 +10,10 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
-    const { success, message } = useSelector(state => state.userInfo.authUser);
-    const accessToken = useSelector(state => state.userInfo.userData.accessToken);
+    const { 
+        authUser: {success, message},
+        loggedIn,
+    } = useSelector(state => state.userInfo);
     
     const onChangeEmail = e => {
         setEmail(e.target.value)
@@ -27,7 +29,7 @@ const Login = () => {
     };
 
     return (
-        accessToken ? (
+        loggedIn ? (
             <Redirect to={history.location.state?.from || '/'} /> 
         ) : (
             <form className={`big-input-container ${loginStyles.wrapper}`} onSubmit={onSubmitForm}>

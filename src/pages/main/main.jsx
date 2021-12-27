@@ -21,14 +21,10 @@ const Main = () => {
         type: null,
     });
 
-    const { burgerIngredientsRequest, burgerIngredientsSuccess, burgerIngredientsError, burgerIngredientsData } =
+    const { burgerIngredientsRequest, burgerIngredientsSuccess, burgerIngredientsError } =
         useSelector((state) => state.burgerIngredients);
 
     const dispatch = useDispatch();
-
-    const getIngredient = (id) => {
-        return burgerIngredientsData.find((item) => item._id === id); 
-    } 
 
     const handleOpenModal = (modalType, payload) => {
         setModal({ isShow: true, type: modalType });

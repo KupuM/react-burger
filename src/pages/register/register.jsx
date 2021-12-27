@@ -11,7 +11,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const history = useHistory();
-    const accessToken = useSelector(state => state.userInfo.userData.accessToken);
+    const loggedIn = useSelector((state) => state.userInfo.loggedIn);
 
     const onChangeName = e => {
         setName(e.target.value)
@@ -31,7 +31,7 @@ const Register = () => {
     };
 
     return (
-        accessToken ? (
+        loggedIn ? (
             <Redirect to={history.location.state?.from || '/'} /> 
         ) : (
             <form className={`big-input-container ${registerStyles.wrapper}`} onSubmit={onSubmitForm}>

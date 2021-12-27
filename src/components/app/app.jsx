@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import AppHeader from "../app-header/app-header";
 import { BrowserRouter as Router, Switch, Route, useLocation, useHistory}  from "react-router-dom"
 import { ForgotPassword, Login, Main, Page404, Profile, Register, ResetPassword } from "../../pages/index";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser, refreshToken } from "../../services/actions/user-info";
+import { useDispatch } from "react-redux";
+import { getUser } from "../../services/actions/user-info";
 import ProtectedRoute from "../protected-route/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -12,21 +12,13 @@ import { getBurgerIngredients } from "../../services/actions/burgers";
 const App = () => {
     const ModalSwitch = () => {
         const dispatch = useDispatch();
-        const cookieAccessToken = localStorage.getItem("refreshToken");
-        const stateAccessToken = useSelector(state => state.userInfo.userData.accessToken);
-        const { email } = useSelector((state) => state.userInfo.userData);
         const location = useLocation();
         const history = useHistory();
         const background = location.state && location.state.background;
 
         useEffect(() => {
             dispatch(getBurgerIngredients());
-            if (!email) {
-                dispatch(getUser());
-            }
-            if (cookieAccessToken && !stateAccessToken) {
-                dispatch(refreshToken());
-            }
+            dispatch(getUser());
         }, []);
 
         const handleCloseModal = () => {

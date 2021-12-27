@@ -35,8 +35,6 @@ const initialState = {
             email: "",
             name: "",
         },
-        accessToken: "",
-        refreshToken: "",
     },
     authUserRequest: false,
     authUserSuccess: false,
@@ -66,6 +64,7 @@ const initialState = {
         success: false,
         message: "",
     },
+    loggedIn: false,
 };
 
 export const userInfo = (state = initialState, { type, payload }) => {
@@ -85,6 +84,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 registerUserSuccess: true,
                 registerUserError: false,
                 userData: payload,
+                loggedIn: true,
             };
         case REGISTER_USER_ERROR:
             return {
@@ -110,6 +110,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 authUserError: false,
                 userData: payload,
                 authUser: initialState.authUser,
+                loggedIn: true,
             };
         case AUTH_USER_ERROR:
             return {
@@ -183,8 +184,6 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 userData: {
                     ...state.userData,
                     success: false,
-                    accessToken: "",
-                    refreshToken: "",
                 },
                 authUser: initialState.authUser,
             };
@@ -209,8 +208,6 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 userData: {
                     ...state.userData,
                     success: false,
-                    accessToken: "",
-                    refreshToken: "",
                 },
                 authUser: initialState.authUser,
             };
@@ -232,6 +229,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                     ...state.userData,
                     ...payload,
                 },
+                loggedIn: true,
             };
         case GET_USER_ERROR:
             return {

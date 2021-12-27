@@ -1,17 +1,23 @@
 import React from "react";
-import { Route, Redirect, useHistory } from "react-router-dom";
-import { getCookie } from "../../utils/cookie";
+import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({children, ...rest}) => {
-    const history = useHistory();
+    const loggedIn = useSelector((state) => state.userInfo.loggedIn);
+
     return (
         <Route
             {...rest}
-            render={({location}) => getCookie('accessToken') ? (
+            render={({location}) => loggedIn ? (
                 children
             ) : (
-                <Redirect to={history.location.state?.from || "/login"} />
+                <Redirect 
+                to={{
+                    pathname: '/login',
+                    state: {from: location}
+                    }} 
+                />
             )}
         />
     )

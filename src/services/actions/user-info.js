@@ -41,12 +41,12 @@ export function authUser(userData) {
         dispatch({type: AUTH_USER_REQUEST});
         getAuthUserData(userData).then(res => {
             if (res && res.success) {
+                localStorage.setItem('refreshToken', res.refreshToken);
+                setCookie('accessToken', res.accessToken, { expires: 1200 });
                 dispatch({
                     type: AUTH_USER_SUCCESS,
                     payload: res
-                })
-                localStorage.setItem('refreshToken', res.refreshToken);
-                setCookie('accessToken', res.accessToken, { expires: 1200 });
+                })            
             } else {
                 dispatch({
                     type: AUTH_USER_ERROR,
@@ -182,5 +182,5 @@ export function logoutUser() {
                 dispatch({type: LOGOUT_USER_ERROR});
             }
         })
-      }
+    }
 }

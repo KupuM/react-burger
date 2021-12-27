@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import resetPasswordStyles from "./reset-password.module.css";
-
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +11,10 @@ const ResetPassword = () => {
     const [wasReloaded, setWasReloaded] = useState(true);
     const dispatch = useDispatch();
     const history = useHistory();
-    const { success, message } = useSelector(state => state.userInfo.setNewPassword);
-    const accessToken = useSelector(state => state.userInfo.userData.accessToken);
+    const {
+        setNewPassword: { success, message},
+        loggedIn
+    } = useSelector(state => state.userInfo);
     const {passwordResetSuccess, setNewPasswordError} = useSelector(state => state.userInfo);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ const ResetPassword = () => {
 
     return (
         <>
-            {accessToken && <Redirect to={history.location.state?.from || '/'} />}
+            {loggedIn&& <Redirect to={history.location.state?.from || '/'} />}
             {!passwordResetSuccess && !setNewPasswordError && <Redirect to="/forgot-password" /> }
             <form className={`big-input-container ${resetPasswordStyles.wrapper}`} onSubmit={onSubmitForm}>
                 <h2 className="text text_type_main-medium">Восстановление пароля</h2>
