@@ -134,7 +134,7 @@ export const refreshToken = (afterRefresh) => (dispatch) => {
                 type: REFRESH_TOKEN_SUCCESS,
                 payload: res
             })
-            setCookie('accessToken', res.accessToken, { expires: 1200 });
+            setCookie('accessToken', res.accessToken, { expires: 31536000 });
             localStorage.setItem('refreshToken', res.refreshToken);
             if (afterRefresh) dispatch(afterRefresh);
         } else {

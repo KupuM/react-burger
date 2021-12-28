@@ -19,7 +19,7 @@ const App = () => {
 
         useEffect(() => {
             dispatch(getBurgerIngredients());
-            if (getCookie('accessToken')) dispatch(getUser());
+            dispatch(getUser());
         }, []);
 
         const handleCloseModal = () => {
