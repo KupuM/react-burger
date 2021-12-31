@@ -1,9 +1,20 @@
 import React from "react";
 import ingredientDetailsStyle from "./ingredient-details.module.css";
-import { ingredientsType } from "../../utils/types";
+import { useRouteMatch, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Spinner from "../spinner/spinner";
 
-const IngredientDetails = (props) => {
-    const { image_large, name, calories, proteins, fat, carbohydrates } = props.ingredient;
+const IngredientDetails = () => {
+    const { params: {ingredientId} } = useRouteMatch();
+    const burgerIngredientsData = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
+    const location = useLocation();
+    const background = location.state && location.state.background;
+
+    const getIngredient = (id) => burgerIngredientsData.find((item) => item._id === id); 
+
+    if (burgerIngredientsData.length === 0) return <Spinner />;
+    
+    const { image_large, name, calories, proteins, fat, carbohydrates } = getIngredient(ingredientId);
 
     const ingredientPropsConstructor = [
         {
@@ -37,10 +48,10 @@ const IngredientDetails = (props) => {
                 <p className="text text_type_main-default text_color_inactive">{prop}</p>
             </div>
         );
-    });
+    }); 
 
     return (
-        <>
+        <div className={!background && ingredientDetailsStyle.wrapper}>
             <h3 className="text text_type_main-large">
                 Детали ингредиента
             </h3>
@@ -49,12 +60,8 @@ const IngredientDetails = (props) => {
                 <p className="text text_type_main-medium mt-4 mb-8">{name}</p>
                 <ul className={`${ingredientDetailsStyle.propsList} mb-5`}>{ingredientPropsTemplate}</ul>
             </div>
-        </>
+        </div>
     );
 };
-
-IngredientDetails.propTypes = {
-    ingredient: ingredientsType.isRequired,
-}  
 
 export default IngredientDetails;

@@ -2,7 +2,7 @@ import {
     ADD_BURGER_CONSTRUCTOR_INGREDIENT,
     DELETE_BURGER_CONSTRUCTOR_INGREDIENT,
     UPDATE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST
-} from "../actions/index";
+} from "../actions/burgers";
 
 const initialState = {
     buns: [],

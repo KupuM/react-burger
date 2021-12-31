@@ -1,0 +1,28 @@
+.wrapper {
+    width: 480px;
+    height: fit-content;
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.wrapper > div, .wrapper > button {
+    margin-top: 24px;
+}
+
+.wrapper > button {
+    margin-top: 24px;
+    margin-bottom: 80px;
+}
+
+.wrapper > p:last-child {
+    margin-top: 16px;
+}
+
+.link {
+    color: var(--interface-accent);
+    text-decoration: none;
+}

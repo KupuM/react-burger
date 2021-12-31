@@ -2,11 +2,11 @@ import {
     UPDATE_ORDER_DETAILS_REQUEST,
     UPDATE_ORDER_DETAILS_SUCCESS,
     UPDATE_ORDER_DETAILS_ERROR
-} from "../actions/index";
+} from "../actions/burgers";
 
 const initialState = { 
     updateOrderDetailsRequest: false, 
-    updateOrderDetailsSuccess: true,
+    updateOrderDetailsSuccess: false,
     updateOrderDetailsError: false,
     orderDetailsData: {
         success: false, 

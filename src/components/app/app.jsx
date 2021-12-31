@@ -1,87 +1,78 @@
-import React, { useState, useEffect } from "react";
-import appStyles from "./app.module.css";
+import React, { useEffect } from "react";
 import AppHeader from "../app-header/app-header";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import Spinner from "../spinner/spinner";
-import ErrorIndicator from "../error-indicator/error-indicator";
-import Modal from "../modal/modal";
+import { BrowserRouter as Router, Switch, Route, useLocation, useHistory}  from "react-router-dom"
+import { ForgotPassword, Login, Main, Page404, Profile, Register, ResetPassword } from "../../pages/index";
+import { useDispatch } from "react-redux";
+import { getUser } from "../../services/actions/user-info";
+import ProtectedRoute from "../protected-route/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import OrderDetails from "../order-details/order-details";
-import { useDispatch, useSelector } from "react-redux";
-import {
-    getBurgerIngredients,
-    ADD_INGREDIENT_DETAILS,
-    DELETE_INGREDIENT_DETAILS,
-    updateOrderDetails
-} from "../../services/actions/index";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import Modal from "../modal/modal";
+import { getBurgerIngredients } from "../../services/actions/burgers";
+import { getCookie } from "../../utils/cookie";
 
 const App = () => {
-    const [modal, setModal] = useState({
-        isShow: false,
-        type: null,
-    });
+    const ModalSwitch = () => {
+        const dispatch = useDispatch();
+        const location = useLocation();
+        const history = useHistory();
+        const background = location.state && location.state.background;
 
-    const { burgerIngredientsRequest, burgerIngredientsSuccess, burgerIngredientsError, burgerIngredientsData } =
-        useSelector((state) => state.burgerIngredients);
+        useEffect(() => {
+            dispatch(getBurgerIngredients());
+            dispatch(getUser());
+        }, []);
 
-    const dispatch = useDispatch();
-
-    const getIngredient = (id) => {
-        return burgerIngredientsData.find((item) => item._id === id); 
-    } 
-
-    const handleOpenModal = (modalType, payload) => {
-        setModal({ isShow: true, type: modalType });
-
-        if (modalType === "modalIngredient") {
-            dispatch({
-                type: ADD_INGREDIENT_DETAILS,
-                payload: payload,
-            });
-        } else {
-            dispatch(updateOrderDetails(payload));
-        }
-    };
-
-    const handleCloseModal = () => {
-        setModal({ ...modal, isShow: false });
-        dispatch({
-            type: DELETE_INGREDIENT_DETAILS,
-        });
-    };
-
-    useEffect(() => {
-        dispatch(getBurgerIngredients());
-    }, [dispatch]);
-
-    const ingredientId = useSelector((state) => state.ingredientDetails._id);
-    const { orderDetailsData, updateOrderDetailsRequest, updateOrderDetailsError } = useSelector((state) => state.orderDetails);
-
-    const modalContent =
-        modal.type === "modalIngredient" ? (
-            ingredientId && <IngredientDetails ingredient={getIngredient(ingredientId)} />
-        ) : (
-            <OrderDetails orderDetailsData={orderDetailsData} loading={updateOrderDetailsRequest} error={updateOrderDetailsError} />
+        const handleCloseModal = () => {
+            history.goBack();
+        };
+        
+        return (
+            <div className="App">
+                <AppHeader />
+                <Switch location={background || location}>
+                    <Route path="/" exact>
+                        <Main />
+                    </Route>
+                    <Route path="/ingredients/:ingredientId" exact>
+                        <IngredientDetails />
+                    </Route>
+                    <Route path="/login" exact>
+                        <Login />
+                    </Route>
+                    <ProtectedRoute path="/profile">
+                        <Profile />
+                    </ProtectedRoute>
+                    <Route path="/register" exact>
+                        <Register />
+                    </Route>
+                    <Route path="/forgot-password" exact>
+                        <ForgotPassword />
+                    </Route>
+                    <Route path="/reset-password" exact>
+                        <ResetPassword />
+                    </Route>
+                    <Route>
+                        <Page404 />
+                    </Route>
+                </Switch>
+                {background && (
+                    <Route
+                        path="/ingredients/:ingredientId"
+                        children={
+                            <Modal onClose={handleCloseModal}>
+                                <IngredientDetails />
+                            </Modal>
+                        }
+                    ></Route>
+                )}
+            </div>
         );
+    };
 
     return (
-        <div className="App">
-            <AppHeader />
-            <main className={appStyles.wrapper}>
-                {burgerIngredientsRequest && <Spinner />}
-                {burgerIngredientsError && <ErrorIndicator />}
-                {burgerIngredientsSuccess && (
-                    <DndProvider backend={HTML5Backend}>
-                        <BurgerIngredients openModal={handleOpenModal} />
-                        <BurgerConstructor openModal={handleOpenModal} />
-                        {modal.isShow && <Modal onClose={handleCloseModal}>{modalContent}</Modal>}
-                    </DndProvider>
-                )}
-            </main>
-        </div>
+        <Router>
+            <ModalSwitch />
+        </Router>
     );
 };
 

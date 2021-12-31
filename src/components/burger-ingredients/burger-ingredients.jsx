@@ -2,10 +2,9 @@ import React, { useRef, useState } from "react";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import SectionNav from "../section-nav/section-nav";
 import SectionIngredients from "../section-ingredients/section-ingredients";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
-const BurgerIngredients = ({ openModal }) => {
+const BurgerIngredients = () => {
     const refBun = useRef(null);
     const refSauce = useRef(null);
     const refMain = useRef(null);
@@ -63,7 +62,6 @@ const BurgerIngredients = ({ openModal }) => {
                                 burgerData={burgerData}
                                 title={item.title}
                                 type={item.type}
-                                onClickItem={openModal}
                             />
                         </section>
                     );
@@ -72,9 +70,5 @@ const BurgerIngredients = ({ openModal }) => {
         </section>
     );
 };
-
-BurgerIngredients.propTypes = {
-    openModal: PropTypes.func.isRequired,
-}  
 
 export default BurgerIngredients;

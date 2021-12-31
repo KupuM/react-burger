@@ -4,7 +4,7 @@ import {
     GET_BURGER_INGREDIENTS_ERROR,
     BURGER_INGREDIENT_COUNTER_INCREMENT,
     BURGER_INGREDIENT_COUNTER_DECREMENT
-} from "../actions/index";
+} from "../actions/burgers";
 
 const initialState = {
     burgerIngredientsRequest: false,
