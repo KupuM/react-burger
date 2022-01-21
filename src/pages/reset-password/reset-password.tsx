@@ -10,26 +10,26 @@ const ResetPassword = () => {
     const [code, setCode] = useState('');
     const [wasReloaded, setWasReloaded] = useState(true);
     const dispatch = useDispatch();
-    const history = useHistory();
+    const history: any = useHistory();
     const {
         setNewPassword: { success, message},
         loggedIn
-    } = useSelector(state => state.userInfo);
-    const {passwordResetSuccess, setNewPasswordError} = useSelector(state => state.userInfo);
+    } = useSelector((state: any) => state.userInfo);
+    const {passwordResetSuccess, setNewPasswordError} = useSelector((state: any) => state.userInfo);
 
     useEffect(() => {
         setWasReloaded(false);
     }, []);
     
-    const onChangeNewPassword = e => {
+    const onChangeNewPassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setPassword(e.target.value)
     };
 
-    const onChangeCode= e => {
+    const onChangeCode= (e: React.ChangeEvent<HTMLInputElement>): void => {
         setCode(e.target.value)
     };
 
-    const onSubmitForm = (e) => {  
+    const onSubmitForm = (e: React.FormEvent): void => {  
         e.preventDefault();
         if (password && code) dispatch(newPassword({password, token: code}));
         setWasReloaded(true);

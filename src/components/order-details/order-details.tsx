@@ -1,11 +1,26 @@
-import React from "react";
+import React, { FC } from "react";
 import orderDetailsStyles from "./order-details.module.css";
 import done from "../../images/done.png";
-import PropTypes from "prop-types";
 import Spinner from "../spinner/spinner";
 import ErrorIndicator from "../error-indicator/error-indicator";
 
-const OrderDeatils = (props) => {
+interface IOrder {
+    number: number;
+}
+
+interface IOrderDetailsData {
+    success: boolean;
+    name: string;
+    order: IOrder;
+}
+
+interface IOrderDetailsProps {
+    orderDetailsData: IOrderDetailsData;
+    loading: boolean;
+    error: boolean;
+}
+
+const OrderDetails: FC<IOrderDetailsProps> = (props) => {
     const { orderDetailsData, loading, error } = props;
     const content = (
         <>
@@ -28,16 +43,4 @@ const OrderDeatils = (props) => {
     );
 };
 
-OrderDeatils.propTypes = {
-    orderDetailsData: PropTypes.shape({
-        success: PropTypes.bool, 
-        name: PropTypes.string,
-        order: PropTypes.shape({
-            number: PropTypes.number
-        })
-    }),
-    loading: PropTypes.bool,
-    error: PropTypes.bool,
-}
-
-export default OrderDeatils;
+export default OrderDetails;

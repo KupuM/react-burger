@@ -1,6 +1,6 @@
 import React from "react";
 
-const OrdersHistory = () => {
+const OrdersHistory = (): JSX.Element => {
 
     return (
         <p>Orders history is coming soon...</p>

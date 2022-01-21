@@ -4,26 +4,26 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { useDispatch, useSelector } from "react-redux";
 import { editUser } from "../../services/actions/user-info";
 
-const EditUser = (props) => {
-    const { name: initialName, email: initLogin} = useSelector(state => state.userInfo.userData.user);
-    const [name, setName ] = useState(initialName);
-    const [login, setLogin ] = useState(initLogin);
+const EditUser = (): JSX.Element => {
+    const { name: initialName, email: initLogin}: any = useSelector<any>(state => state.userInfo.userData.user);
+    const [name, setName ] = useState<string>(initialName);
+    const [login, setLogin ] = useState<string>(initLogin);
     const [password, setPassword] = useState('');
     const [showFooter, setShowFooter] = useState(false);
 
     const dispatch = useDispatch();
 
-    const onChangeName = e => {
+    const onChangeName = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setName(e.target.value);
         setShowFooter(true);
     };
     
-    const onChangeLogin = e => {
+    const onChangeLogin = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setLogin(e.target.value);
         setShowFooter(true);
     };
 
-    const onChangePassword = e => {
+    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setPassword(e.target.value);
         setShowFooter(true);
     };
@@ -34,7 +34,7 @@ const EditUser = (props) => {
         setShowFooter(false);
     };
 
-    const onSubmitForm = e => {
+    const onSubmitForm = (e: React.FormEvent): void => {
         e.preventDefault();
         dispatch(editUser({name, login, password}));
         setShowFooter(false);

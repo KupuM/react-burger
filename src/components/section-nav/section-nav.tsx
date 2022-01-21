@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import sectionNavStyles from './section-nav.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from "prop-types";
 
-const SectionNav = ({ items, activeItem }) => {
+interface ISectionNavItems {
+    title: string;
+    type: string;
+}
+
+interface ISectionNavProps {
+    items: Array<ISectionNavItems>;
+    activeItem: string;
+}
+
+const SectionNav: FC<ISectionNavProps> = ({ items, activeItem }) => {
 	const [ activeTab, setActiveTab ] = useState(activeItem);
 
-    const setTab = (tab) => {
+    const setTab = (tab: string): void => {
         setActiveTab(tab);
         const element = document.getElementById(tab);
         element && element.scrollIntoView({block: "start", behavior: "smooth" });
@@ -28,13 +37,5 @@ const SectionNav = ({ items, activeItem }) => {
 		</nav>
 	);
 };
-
-SectionNav.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-    })),
-    activeItem: PropTypes.string.isRequired
-}
 
 export default SectionNav;

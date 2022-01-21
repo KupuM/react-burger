@@ -4,8 +4,9 @@ import Navbar from '../navbar/navbar';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from "react-router-dom";
+import { INavbarItem } from "../../utils/models";
 
-const navbarLeftConstructor = [
+const navbarLeftConstructor: INavbarItem[] = [
     {
         title: 'Конструктор',
         icon: <BurgerIcon type="secondary" />,
@@ -21,7 +22,7 @@ const navbarLeftConstructor = [
         isStrictMatch: true,
     }
 ];
-const navbarRightConstructor = [
+const navbarRightConstructor: INavbarItem[] = [
     {
         title: 'Личный кабинет',
         icon: <ProfileIcon type="secondary" />,
@@ -31,7 +32,7 @@ const navbarRightConstructor = [
     }
 ];
 
-const AppHeader = () => {
+const AppHeader = (): JSX.Element => {
 
 	return (
         <header className={`${appHeaderStyles.wrapper} pt-4 pb-4`}>

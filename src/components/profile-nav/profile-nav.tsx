@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../services/actions/user-info";
 
-const ProfileNav = () => {
+const ProfileNav = (): JSX.Element => {
     const dispatch = useDispatch();
 
     const onClickLogout = () => {

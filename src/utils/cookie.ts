@@ -1,4 +1,8 @@
-export const setCookie = (name, value, props) => {
+type TSetCookieProps = {
+    [propName: string]: string | Date | number | boolean;
+} 
+
+export const setCookie = (name: string, value: string, props: TSetCookieProps): void => {
     props = props || {};
     let exp = props.expires;
     if (typeof exp == "number" && exp) {
@@ -6,9 +10,9 @@ export const setCookie = (name, value, props) => {
         d.setTime(d.getTime() + exp * 1000);
         exp = props.expires = d;
     }
-    if (exp && exp.toUTCString) {
-        props.expires = exp.toUTCString();
-    }
+    //@ts-ignore
+    if (exp && exp.toUTCString) props.expires = exp.toUTCString();
+
     value = encodeURIComponent(value);
     let updatedCookie = name + "=" + value;
     for (const propName in props) {
@@ -21,13 +25,14 @@ export const setCookie = (name, value, props) => {
     document.cookie = updatedCookie;
 }
 
-export const getCookie = (name) => {
+export const getCookie = (name: string): string | undefined => {
     const matches = document.cookie.match(
+        // eslint-disable-next-line
         new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }; 
 
-export const deleteCookie = (name) => {
+export const deleteCookie = (name: string) => {
     setCookie(name, '', { expires: 0 })
 }

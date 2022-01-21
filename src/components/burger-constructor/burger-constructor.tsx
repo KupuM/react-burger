@@ -1,7 +1,6 @@
-import React, {useCallback} from "react";
+import React, {FC, useCallback} from "react";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
@@ -10,18 +9,23 @@ import {
     BURGER_INGREDIENT_COUNTER_INCREMENT,
 } from "../../services/actions/burgers";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item"
-import uuid from "react-uuid";
+import { v4 as uuidv4 } from 'uuid';
 import { useLocation, useHistory } from "react-router-dom";
+import { IIngredientType } from "../../utils/models";
 
-const BurgerConstructor = ({openModal}) => {
+interface IBurgerConstructorProps {
+    openModal: (modalType: string, payload: string[]) => void;
+}
+
+const BurgerConstructor: FC<IBurgerConstructorProps> = ({openModal}) => {
     const { 
         burgerConstructor: {buns, otherIngredients },
         userInfo: { loggedIn }
-    } = useSelector(store => store)
+    } = useSelector((store: any) => store)
     const total = 
-        buns.map(item => item.price).reduce((prev, curr) => prev + curr, 0) +
-        otherIngredients.map(item => item.price).reduce((prev, curr) => prev + curr, 0);
-    const burgerConstructorIngredientsIds = [...buns.map((item) => item._id), ...otherIngredients.map((item) => item._id)];
+        buns.map((item: IIngredientType) => item.price).reduce((prev: number, curr: number) => prev + curr, 0) +
+        otherIngredients.map((item: IIngredientType) => item.price).reduce((prev: number, curr: number) => prev + curr, 0);
+    const burgerConstructorIngredientsIds = [...buns.map((item: IIngredientType) => item._id), ...otherIngredients.map((item: IIngredientType) => item._id)];
     const dispatch = useDispatch();
     const location = useLocation();
     const history = useHistory();
@@ -31,10 +35,10 @@ const BurgerConstructor = ({openModal}) => {
         collect: monitor => ({
             isHover: monitor.isOver(),
         }),
-        drop(ingredient) {
+        drop(ingredient: IIngredientType) {
             dispatch({
                 type: ADD_BURGER_CONSTRUCTOR_INGREDIENT,
-                payload: {...ingredient, dragId: uuid()},
+                payload: {...ingredient, dragId: uuidv4()},
             });
             dispatch({
                 type: BURGER_INGREDIENT_COUNTER_INCREMENT,
@@ -80,7 +84,7 @@ const BurgerConstructor = ({openModal}) => {
                 {buns[0] && <BurgerConstructorItem item={buns[0]} type={"bun"} position={"top"} />}
             </ul>
             <ul className={`${burgerConstructorStyles.mainElements}`}>
-                {otherIngredients && otherIngredients.map((item, index) => 
+                {otherIngredients && otherIngredients.map((item: IIngredientType, index: number) => 
                         <BurgerConstructorItem
                             item={item}
                             type={"main"}                          
@@ -102,9 +106,5 @@ const BurgerConstructor = ({openModal}) => {
         </section>
     );
 };
-
-BurgerConstructor.propTypes = {
-    openModal: PropTypes.func.isRequired,
-}  
 
 export default BurgerConstructor;

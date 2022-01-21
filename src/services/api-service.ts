@@ -11,17 +11,19 @@ import {
     LOGOUT_USER,
 } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
+import { IIngredientType } from "../utils/models";
 
-export const getBurgerData = async () => {
+export const getBurgerData = async (): Promise<object> => {
     try {
         const res = await fetch(API_URL + INGREDIENTS);
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
-export const getOrderData = async (ingredients) => {
+export const getOrderData = async (ingredients: IIngredientType[]): Promise<object> => {
     try {
         const res = await fetch(API_URL + ORDERS, {
             method: 'POST',
@@ -35,10 +37,11 @@ export const getOrderData = async (ingredients) => {
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
-export const getRegisterUserData = async ({email, password, name}) => {
+export const getRegisterUserData = async ({email, password, name}: {email: string; password: number; name: string}): Promise<object> => {
     try {
         const res = await fetch(API_URL + REGISTRATION_USER, {
             method: 'POST',
@@ -55,10 +58,11 @@ export const getRegisterUserData = async ({email, password, name}) => {
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
-export const getAuthUserData = async ({email, password}) => {
+export const getAuthUserData = async ({email, password}: {email: string; password: number;}): Promise<object> => {
     try {
         const res = await fetch(API_URL + LOGIN_USER, {
             method: 'POST',
@@ -74,10 +78,11 @@ export const getAuthUserData = async ({email, password}) => {
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
-export const getPasswordReset = async (email) => {
+export const getPasswordReset = async (email: string): Promise<object> => {
     try {
         const res = await fetch(API_URL + PASSWORD_RESET, {
             method: 'POST',
@@ -92,10 +97,11 @@ export const getPasswordReset = async (email) => {
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
-export const setNewPassword = async ({password, token}) => {
+export const setNewPassword = async ({password, token}: {password: string; token: number;}): Promise<object> => {
     try {
         const res = await fetch(API_URL + SET_NEW_PASSWORD, {
             method: 'POST',
@@ -111,10 +117,11 @@ export const setNewPassword = async ({password, token}) => {
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
-export const getNewToken = async () => {
+export const getNewToken = async (): Promise<object> => {
     try {
         const res = await fetch(API_URL + TOKEN_REFRESH, {
             method: 'POST',
@@ -129,14 +136,16 @@ export const getNewToken = async () => {
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
-export const getUserData = async () => {
+export const getUserData = async (): Promise<object> => {
     try {
         const res = await fetch(API_URL + AUTH_USER, {
             method: 'GET',
             mode: 'cors',
+            //@ts-ignore
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': getCookie('accessToken')
@@ -145,14 +154,16 @@ export const getUserData = async () => {
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
-export const editUserData = async (userData) => {
+export const editUserData = async (userData: {name: string, login: string, password: string}): Promise<object> => {
     try {
         const res = await fetch(API_URL + AUTH_USER, {
             method: 'PATCH',
             mode: 'cors',
+            //@ts-ignore
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'authorization': getCookie('accessToken')
@@ -162,10 +173,11 @@ export const editUserData = async (userData) => {
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
-export const logoutUserData = async () => {
+export const logoutUserData = async (): Promise<object> => {
     try {
         const res = await fetch(API_URL + LOGOUT_USER, {
             method: 'POST',
@@ -180,5 +192,6 @@ export const logoutUserData = async () => {
         return await res.json();
     } catch (error) {
         console.log(error);
+        throw error;
     }
 }

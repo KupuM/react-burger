@@ -11,7 +11,7 @@ import Spinner from "../../components/spinner/spinner";
 const Profile = () => {
     const dispatch = useDispatch();
     const { path } = useRouteMatch();
-    const hasUserEmail = useSelector(state => state.userInfo.userData.user.email);
+    const hasUserEmail = useSelector((state: any) => state.userInfo.userData.user.email);
 
     useEffect(() => {
         dispatch(getUser());
