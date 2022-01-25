@@ -1,11 +1,16 @@
-import React from "react";
+import React, {FC} from "react";
 import ingredientsItemStyles from "./ingredients-item.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
+import { IIngredientType } from "../../utils/models";
 
-const IngredientsItem = (props) => {
+interface IIngredientsItemProps {
+    item: IIngredientType;
+    quantity?: number;
+}
+
+const IngredientsItem: FC<IIngredientsItemProps> = (props) => {
     const {
         item: { image, name, price, _id },
         quantity,
@@ -28,11 +33,11 @@ const IngredientsItem = (props) => {
             className={ingredientsItemStyles.link}
         >
             <li className={ingredientsItemStyles.item} style={{ opacity }}>
-                {quantity > 0 && (
+                {quantity && quantity > 0 ? (
                     <div className={ingredientsItemStyles.count}>
                         <Counter count={quantity} size="default" />
                     </div>
-                )}
+                ) : null}
                 <div className={ingredientsItemStyles.dragBlock} ref={dragRef}>
                     <img className={`${ingredientsItemStyles.image} mb-1 ml-4 mr-4`} src={image} alt={name} />
                     <div className={`${ingredientsItemStyles.price} mb-1`}>
@@ -45,15 +50,5 @@ const IngredientsItem = (props) => {
         </Link>
     );
 };
-
-IngredientsItem.propTypes = {
-    item: PropTypes.shape({
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        _id: PropTypes.string.isRequired
-      }),
-    quantity: PropTypes.number
-}
 
 export default IngredientsItem;

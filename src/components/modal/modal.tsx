@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { createPortal } from "react-dom";
 import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { MODAL_ROOT } from "../../utils/constants";
 
-const Modal = ({onClose, children}) => {
+interface IModalProps {
+    onClose: () => void;
+    children: JSX.Element;
+}
 
-    const handlePressEscape = (e) => {
+const Modal: FC<IModalProps> = ({onClose, children}) => {
+
+    const handlePressEscape = (e: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent): void => {
         if (e.key === "Escape") {
             onClose();
         }
@@ -20,7 +24,7 @@ const Modal = ({onClose, children}) => {
         return () => document.removeEventListener("keydown", handlePressEscape);
     });
 
-    return createPortal(
+    return MODAL_ROOT ? createPortal(
         <>
             <ModalOverlay onClose={onClose} />
             <div className={`${modalStyles.modal} p-10`} onKeyDown={handlePressEscape}>
@@ -29,12 +33,7 @@ const Modal = ({onClose, children}) => {
             </div>
         </>,
         MODAL_ROOT
-    );
-};
-
-Modal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    children: PropTypes.element.isRequired,
+    ) : null;
 };
 
 export default Modal;

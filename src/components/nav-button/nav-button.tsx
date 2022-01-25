@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { useRouteMatch } from "react-router-dom";
 import navButtonStyles from './nav-button.module.css';
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import { INavbarItem } from "../../utils/models";
 
-const NavButton = (props) => {
+const NavButton: FC<INavbarItem> = (props) => {
     const {title, icon, iconActive, link, isStrictMatch} = props;
     const match = useRouteMatch({
         path: link,
@@ -12,7 +12,7 @@ const NavButton = (props) => {
         sensitive: true,
     });
 
-    let image;
+    let image: JSX.Element;
     if (isStrictMatch) {
         image = match?.isExact ? iconActive : icon
     } else {
@@ -30,14 +30,6 @@ const NavButton = (props) => {
             <span className="text ml-2">{title}</span>
         </NavLink>
     );
-}
-
-NavButton.propTypes = {
-    title: PropTypes.string.isRequired,
-    icon: PropTypes.element.isRequired,
-    iconActive: PropTypes.element.isRequired,
-    link: PropTypes.string.isRequired,
-    isStrictMatch: PropTypes.bool
 }
 
 export default NavButton;

@@ -1,10 +1,15 @@
-import React from "react";
+import React, {FC} from "react";
 import sectionIngredientsStyles from "./section-ingredients.module.css";
 import IngredientsItem from "../ingredients-item/ingredients-item";
-import PropTypes from "prop-types";
-import { ingredientsType } from "../../utils/types";
+import { IIngredientType } from "../../utils/models";
 
-const SectionIngredients = (props) => {
+interface ISectionIngredients {
+    burgerData: IIngredientType[];
+    title: string;
+    type: string;
+}
+
+const SectionIngredients: FC<ISectionIngredients> = (props) => {
     const { burgerData, title, type } = props;
     const ingredients = burgerData.filter((item) => item.type === type);
     
@@ -27,11 +32,5 @@ const SectionIngredients = (props) => {
         </>
     );
 };
-
-SectionIngredients.propTypes = {
-    burgerData: PropTypes.arrayOf(ingredientsType).isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-}
 
 export default SectionIngredients;

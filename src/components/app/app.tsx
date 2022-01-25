@@ -8,28 +8,30 @@ import ProtectedRoute from "../protected-route/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { getBurgerIngredients } from "../../services/actions/burgers";
-import { getCookie } from "../../utils/cookie";
+import { LocationState } from "../../utils/models";
 
 const App = () => {
     const ModalSwitch = () => {
         const dispatch = useDispatch();
-        const location = useLocation();
+        const location = useLocation<LocationState>();
         const history = useHistory();
         const background = location.state && location.state.background;
 
         useEffect(() => {
             dispatch(getBurgerIngredients());
             dispatch(getUser());
-        }, []);
+        }, [dispatch]);
 
         const handleCloseModal = () => {
             history.goBack();
         };
-        
         return (
             <div className="App">
                 <AppHeader />
-                <Switch location={background || location}>
+                <Switch
+                    //@ts-ignore
+                    location={background || location}
+                >
                     <Route path="/" exact>
                         <Main />
                     </Route>

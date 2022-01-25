@@ -5,9 +5,9 @@ import SectionIngredients from "../section-ingredients/section-ingredients";
 import { useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
-    const refBun = useRef(null);
-    const refSauce = useRef(null);
-    const refMain = useRef(null);
+    const refBun = useRef<HTMLInputElement>(null);
+    const refSauce = useRef<HTMLInputElement>(null);
+    const refMain = useRef<HTMLInputElement>(null);
     const [ activeItem, setActiveItem ] = useState('bun');
 
     const sectionConstructor = [
@@ -28,9 +28,9 @@ const BurgerIngredients = () => {
         },
     ];
 
-    const burgerData = useSelector(state => state.burgerIngredients.burgerIngredientsData);
+    const burgerData: any = useSelector<any>(state => state.burgerIngredients.burgerIngredientsData);
 
-    const compareCoordsAndSetActiveItem = (bunTop, sauceTop, mainTop, burgerIngredientsWrapperTop) => {
+    const compareCoordsAndSetActiveItem = (bunTop: number, sauceTop: number, mainTop: number, burgerIngredientsWrapperTop: number): void => {
         if (bunTop < burgerIngredientsWrapperTop && sauceTop > burgerIngredientsWrapperTop) {
             setActiveItem('bun');
         } else if (sauceTop < burgerIngredientsWrapperTop && mainTop > burgerIngredientsWrapperTop) {
@@ -41,10 +41,11 @@ const BurgerIngredients = () => {
     };
     
     const onScroll = () => {
-        const burgerIngredientsWrapperTop = document.getElementById('burgerIngredientsWrapper').getBoundingClientRect().top;
-        const bunTop = refBun.current.getBoundingClientRect().top - 10
-        const sauceTop = refSauce.current.getBoundingClientRect().top - 10
-        const mainTop = refMain.current.getBoundingClientRect().top - 10
+        const burgerIngredientsWrapperElement = document.getElementById('burgerIngredientsWrapper');
+        const burgerIngredientsWrapperTop = burgerIngredientsWrapperElement ? burgerIngredientsWrapperElement.getBoundingClientRect().top : 0;
+        const bunTop = refBun.current ? (refBun.current.getBoundingClientRect().top - 10) : 0;
+        const sauceTop = refSauce.current ? (refSauce.current.getBoundingClientRect().top - 10) : 0;
+        const mainTop = refMain.current ? (refMain.current.getBoundingClientRect().top - 10) : 0;
 
         compareCoordsAndSetActiveItem(bunTop, sauceTop, mainTop, burgerIngredientsWrapperTop);
     };

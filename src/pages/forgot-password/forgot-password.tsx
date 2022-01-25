@@ -10,14 +10,14 @@ import { getCookie } from "../../utils/cookie";
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
-    const history = useHistory();
-    const { success, message } = useSelector(state => state.userInfo.passwordReset);
+    const history: any = useHistory();
+    const { success, message } = useSelector((state: any) => state.userInfo.passwordReset);
     
-    const onChangeEmail = e => {
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value)
     };
 
-    const onSubmitForm = e => {
+    const onSubmitForm = (e: React.FormEvent): void => {
         e.preventDefault();
         if (email) dispatch(passwordReset(email));
     };

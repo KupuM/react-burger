@@ -1,6 +1,4 @@
-import React, { useRef } from "react";
-import PropTypes from "prop-types";
-import { ingredientsType } from "../../utils/types";
+import React, { FC, useRef } from "react";
 import BurgerConstructorItemStyles from "./burger-constructor-item.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
@@ -9,11 +7,20 @@ import {
 } from "../../services/actions/burgers";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
+import { IIngredientType } from "../../utils/models";
 
-const BurgerConstructorItem = (props) => {
+interface IBurgerConstructorItemProps {
+    item: IIngredientType;
+    type: string;
+    position?: 'top' | 'bottom';
+    index?: number;
+    moveCard?: (dragIndex: number, hoverIndex: number) => void;
+}
+
+const BurgerConstructorItem: FC<IBurgerConstructorItemProps> = (props) => {
     const { item, type, position, index, moveCard } = props;
     const dispatch = useDispatch();
-    let positionText = "";
+    let positionText: string = "";
     if (position === "top") {
         positionText = " (верх)";
     } else if (position === "bottom") {
@@ -21,7 +28,7 @@ const BurgerConstructorItem = (props) => {
     }
     const isLocked = type === "bun";
 
-    const ref = useRef(null);
+    const ref = useRef<HTMLLIElement>(null);
     const [{ handlerId }, drop] = useDrop({
         accept: "component",
         collect(monitor) {
@@ -29,48 +36,48 @@ const BurgerConstructorItem = (props) => {
                 handlerId: monitor.getHandlerId(),
             };
         },
-        hover(item, monitor) {
+        hover(item: {id: string, index: number}, monitor) {
             if (!ref.current) {
                 return;
             }
-            const dragIndex = item.index;
-            const hoverIndex = index;
+            const dragIndex: number = item.index;
+            const hoverIndex: number = index!;
             if (dragIndex === hoverIndex) {
                 return;
             }
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
             }
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
                 return;
             }
-            moveCard(dragIndex, hoverIndex);
+            moveCard!(dragIndex, hoverIndex);
             item.index = hoverIndex;
         },
     });
     const [{ isDragging }, drag] = useDrag({
         type: "component",
-        item: () => ({ id: item.id, index }),
+        item: () => ({ id: item._id, index }),
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
     });
     const opacity = isDragging ? 0 : 1;
     if (item.type !== "bun") drag(drop(ref));
-    const preventDefault = (e) => e.preventDefault();
+    const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
-    const handleDeleteElement = (index, id) => {
+    const handleDeleteElement = () => {
         dispatch({
             type: DELETE_BURGER_CONSTRUCTOR_INGREDIENT,
             payload: index,
         });
         dispatch({
             type: BURGER_INGREDIENT_COUNTER_DECREMENT,
-            payload: { id: id },
+            payload: { id: item._id },
         });
     };
 
@@ -94,18 +101,10 @@ const BurgerConstructorItem = (props) => {
                 text={`${item.name + positionText}`}
                 price={item.price}
                 thumbnail={item.image}
-                handleClose={() => handleDeleteElement(index, item._id)}
+                handleClose={() => handleDeleteElement()}
             />
         </li>
     );
 };
-
-BurgerConstructorItem.propTypes = {
-    item: ingredientsType.isRequired,
-    type: PropTypes.string.isRequired,
-    position: PropTypes.string,
-    index: PropTypes.number,
-    moveCard: PropTypes.func
-}
 
 export default BurgerConstructorItem;

@@ -10,22 +10,22 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
-    const history = useHistory();
-    const loggedIn = useSelector((state) => state.userInfo.loggedIn);
+    const history: any = useHistory();
+    const loggedIn = useSelector((state: any) => state.userInfo.loggedIn);
 
-    const onChangeName = e => {
+    const onChangeName = (e: React.ChangeEvent<HTMLInputElement>): void  => {
         setName(e.target.value)
     };
     
-    const onChangeEmail = e => {
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void  => {
         setEmail(e.target.value)
     };
 
-    const onChangePassword = e => {
+    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void  => {
         setPassword(e.target.value)
     };
 
-    const onSubmitForm = (e) => {
+    const onSubmitForm = (e: React.FormEvent): void => {
         e.preventDefault();
         if (name && email && password) dispatch(registerUser({name, email, password}));
     };

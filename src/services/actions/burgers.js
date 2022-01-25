@@ -3,6 +3,7 @@ import { getBurgerData, getOrderData } from "../api-service";
 export const ADD_BURGER_CONSTRUCTOR_INGREDIENT = 'ADD_BURGER_CONSTRUCTOR_INGREDIENT';
 export const DELETE_BURGER_CONSTRUCTOR_INGREDIENT = 'DELETE_BURGER_CONSTRUCTOR_INGREDIENT';
 export const UPDATE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST = 'UPDATE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST';
+export const DELETE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST = 'DELETE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST';
 
 
 export const ADD_INGREDIENT_DETAILS = 'ADD_INGREDIENT_DETAILS';
@@ -44,7 +45,10 @@ export function updateOrderDetails(ingredients) {
                 dispatch({
                     type: UPDATE_ORDER_DETAILS_SUCCESS,
                     payload: res
-                })
+                });
+                dispatch({
+                    type: DELETE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST,
+                });
             } else {
                 dispatch({type: UPDATE_ORDER_DETAILS_ERROR});
             }

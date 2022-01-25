@@ -15,18 +15,23 @@ import {
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
+interface IModal {
+    isShow: boolean,
+    type: string | null,
+}
+
 const Main = () => {
-    const [modal, setModal] = useState({
+    const [modal, setModal] = useState<IModal>({
         isShow: false,
         type: null,
     });
 
     const { burgerIngredientsRequest, burgerIngredientsSuccess, burgerIngredientsError } =
-        useSelector((state) => state.burgerIngredients);
+        useSelector((state: any) => state.burgerIngredients);
 
     const dispatch = useDispatch();
 
-    const handleOpenModal = (modalType, payload) => {
+    const handleOpenModal = (modalType: string, payload: string[]) => {
         setModal({ isShow: true, type: modalType });
 
         if (modalType === "modalIngredient") {
@@ -46,7 +51,7 @@ const Main = () => {
         });
     };
 
-    const { orderDetailsData, updateOrderDetailsRequest, updateOrderDetailsError } = useSelector((state) => state.orderDetails);
+    const { orderDetailsData, updateOrderDetailsRequest, updateOrderDetailsError } = useSelector((state: any) => state.orderDetails);
 
     return (
         

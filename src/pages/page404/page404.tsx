@@ -8,7 +8,11 @@ const Page404 = () => {
         <div className={page404Styles.wrapper}>
             <h2>Ошибка 404...</h2>
             <p className="p-5">Страница не существует</p>
-            <Link to="/" exact>
+            <Link 
+                to="/"
+                //@ts-ignore
+                exact
+            >
                 <Button type="primary" size="medium">
                     На главную страницу
                 </Button>

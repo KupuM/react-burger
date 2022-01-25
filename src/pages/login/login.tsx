@@ -6,24 +6,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { authUser } from "../../services/actions/user-info";
 
 const Login = () => {
-    const history = useHistory();
+    const history: any = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const { 
         authUser: {success, message},
         loggedIn,
-    } = useSelector(state => state.userInfo);
+    } = useSelector((state: any) => state.userInfo);
     
-    const onChangeEmail = e => {
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value)
     };
 
-    const onChangePassword = e => {
+    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setPassword(e.target.value)
     };
 
-    const onSubmitForm = (e) => {
+    const onSubmitForm = (e: React.FormEvent): void => {
         e.preventDefault();
         if (email && password) dispatch(authUser({email, password}));
     };
