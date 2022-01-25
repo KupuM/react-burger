@@ -13,7 +13,7 @@ import {
 import { getCookie } from "../utils/cookie";
 import { IIngredientType } from "../utils/models";
 
-export const getBurgerData = async (): Promise<object> => {
+export const getBurgerData = async () => {
     try {
         const res = await fetch(API_URL + INGREDIENTS);
         return await res.json();
@@ -23,7 +23,7 @@ export const getBurgerData = async (): Promise<object> => {
     }
 };
 
-export const getOrderData = async (ingredients: IIngredientType[]): Promise<object> => {
+export const getOrderData = async (ingredients: IIngredientType[]) => {
     try {
         const res = await fetch(API_URL + ORDERS, {
             method: 'POST',
@@ -41,7 +41,7 @@ export const getOrderData = async (ingredients: IIngredientType[]): Promise<obje
     }
 };
 
-export const getRegisterUserData = async ({email, password, name}: {email: string; password: number; name: string}): Promise<object> => {
+export const getRegisterUserData = async ({email, password, name}: {email: string; password: number; name: string}) => {
     try {
         const res = await fetch(API_URL + REGISTRATION_USER, {
             method: 'POST',
@@ -62,7 +62,7 @@ export const getRegisterUserData = async ({email, password, name}: {email: strin
     }
 };
 
-export const getAuthUserData = async ({email, password}: {email: string; password: number;}): Promise<object> => {
+export const getAuthUserData = async ({email, password}: {email: string; password: number;}) => {
     try {
         const res = await fetch(API_URL + LOGIN_USER, {
             method: 'POST',
@@ -82,7 +82,7 @@ export const getAuthUserData = async ({email, password}: {email: string; passwor
     }
 };
 
-export const getPasswordReset = async (email: string): Promise<object> => {
+export const getPasswordReset = async (email: string) => {
     try {
         const res = await fetch(API_URL + PASSWORD_RESET, {
             method: 'POST',
@@ -101,7 +101,7 @@ export const getPasswordReset = async (email: string): Promise<object> => {
     }
 };
 
-export const setNewPassword = async ({password, token}: {password: string; token: number;}): Promise<object> => {
+export const setNewPassword = async ({password, token}: {password: string; token: number;}) => {
     try {
         const res = await fetch(API_URL + SET_NEW_PASSWORD, {
             method: 'POST',
@@ -121,7 +121,7 @@ export const setNewPassword = async ({password, token}: {password: string; token
     }
 };
 
-export const getNewToken = async (): Promise<object> => {
+export const getNewToken = async () => {
     try {
         const res = await fetch(API_URL + TOKEN_REFRESH, {
             method: 'POST',
@@ -140,7 +140,7 @@ export const getNewToken = async (): Promise<object> => {
     }
 };
 
-export const getUserData = async (): Promise<object> => {
+export const getUserData = async () => {
     try {
         const res = await fetch(API_URL + AUTH_USER, {
             method: 'GET',
@@ -158,7 +158,7 @@ export const getUserData = async (): Promise<object> => {
     }
 };
 
-export const editUserData = async (userData: {name: string, login: string, password: string}): Promise<object> => {
+export const editUserData = async (userData: {name: string, login: string, password: string}) => {
     try {
         const res = await fetch(API_URL + AUTH_USER, {
             method: 'PATCH',
@@ -177,7 +177,7 @@ export const editUserData = async (userData: {name: string, login: string, passw
     }
 };
 
-export const logoutUserData = async (): Promise<object> => {
+export const logoutUserData = async () => {
     try {
         const res = await fetch(API_URL + LOGOUT_USER, {
             method: 'POST',
