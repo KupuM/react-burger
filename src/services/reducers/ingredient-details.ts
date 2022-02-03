@@ -1,13 +1,18 @@
 import { 
     ADD_INGREDIENT_DETAILS,
     DELETE_INGREDIENT_DETAILS
-} from "../actions/burgers";
+} from "../constants/burgers";
+import { TIngredientDetailsActions } from "../actions/ingredient-details";
 
-const initialState= {
+interface IIngredientDetailsState {
+    _id: string;
+};
+
+const initialState: IIngredientDetailsState = {
     _id: "",
 };
 
-const ingredientDetails = (state = initialState, action) => {
+const ingredientDetails = (state = initialState, action: TIngredientDetailsActions) => {
     switch(action.type) {
         case ADD_INGREDIENT_DETAILS:
             return {...state, _id: action.payload};

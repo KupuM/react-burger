@@ -4,17 +4,26 @@ import {
     GET_BURGER_INGREDIENTS_ERROR,
     BURGER_INGREDIENT_COUNTER_INCREMENT,
     BURGER_INGREDIENT_COUNTER_DECREMENT
-} from "../actions/burgers";
+} from "../constants/burgers";
+import { TBurgerActions } from "../actions/burgers"
+import { IIngredientType } from "../../utils/types";
 
-const initialState = {
+type burgerIngredientsState = {
+    burgerIngredientsRequest: boolean,
+    burgerIngredientsSuccess: boolean,
+    burgerIngredientsError: boolean,
+    burgerIngredientsData: IIngredientType[];
+};
+
+const initialState: burgerIngredientsState = {
     burgerIngredientsRequest: false,
     burgerIngredientsSuccess: false,
     burgerIngredientsError: false,
     burgerIngredientsData: []
 };
 
-const burgerIngredients = (state = initialState, action) => {
-    let ingredient, newBurgerIngredientsData;
+const burgerIngredients = (state = initialState, action: TBurgerActions) => {
+    let ingredient: IIngredientType, newBurgerIngredientsData: IIngredientType[];
     switch (action.type) {
         case GET_BURGER_INGREDIENTS_REQUEST:
             return {
@@ -39,16 +48,16 @@ const burgerIngredients = (state = initialState, action) => {
                 burgerIngredientsError: true
             }
         case BURGER_INGREDIENT_COUNTER_INCREMENT:
-            ingredient = state.burgerIngredientsData.find(item => item._id === action.payload.id);
+            ingredient = state.burgerIngredientsData.find(item => item._id === action.payload.id)!;
             ingredient['counter'] = (ingredient['counter']) || 0;
             newBurgerIngredientsData = state.burgerIngredientsData
-                .map(item => {
+                .map((item: IIngredientType) => {
                         if (item.type === "bun" && item._id === action.payload.id) {
                             return {...ingredient, counter: 2}
                         } else if (item.type === "bun" && action.payload.type === "bun" && item._id !== action.payload.id) {
                             return {...item, counter: 0}
                         } else if (item.type !== "bun" && item._id === action.payload.id) {
-                            return {...ingredient, counter: ingredient.counter + 1}
+                            return {...ingredient, counter: ingredient.counter! + 1}
                         } else {
                             return item
                         }
@@ -61,10 +70,10 @@ const burgerIngredients = (state = initialState, action) => {
                 ]
             }
         case BURGER_INGREDIENT_COUNTER_DECREMENT:
-            ingredient = state.burgerIngredientsData.find(item => item._id === action.payload.id);
+            ingredient = state.burgerIngredientsData.find(item => item._id === action.payload.id)!;
             newBurgerIngredientsData = state.burgerIngredientsData
                 .map(item => (
-                    item._id === action.payload.id ? {...ingredient, counter: ingredient.counter - 1} : item)
+                    item._id === action.payload.id ? {...ingredient, counter: ingredient.counter! - 1} : item)
                 );
             return {
                 ...state,

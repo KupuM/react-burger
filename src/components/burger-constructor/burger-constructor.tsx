@@ -7,14 +7,14 @@ import {
     ADD_BURGER_CONSTRUCTOR_INGREDIENT,
     UPDATE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST,
     BURGER_INGREDIENT_COUNTER_INCREMENT,
-} from "../../services/actions/burgers";
+} from "../../services/constants/burgers";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item"
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation, useHistory } from "react-router-dom";
-import { IIngredientType } from "../../utils/models";
+import { IIngredientType } from "../../utils/types";
 
 interface IBurgerConstructorProps {
-    openModal: (modalType: string, payload: string[]) => void;
+    openModal: (modalType: string, payload: string | IIngredientType[]) => void;
 }
 
 const BurgerConstructor: FC<IBurgerConstructorProps> = ({openModal}) => {

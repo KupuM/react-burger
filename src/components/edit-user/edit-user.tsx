@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { editUser } from "../../services/actions/user-info";
 
 const EditUser = (): JSX.Element => {
-    const { name: initialName, email: initLogin}: any = useSelector<any>(state => state.userInfo.userData.user);
+    const { name: initialName, email: initEmail }: any = useSelector<any>(state => state.userInfo.userData.user);
     const [name, setName ] = useState<string>(initialName);
-    const [login, setLogin ] = useState<string>(initLogin);
+    const [email, setEmail ] = useState<string>(initEmail);
     const [password, setPassword] = useState('');
     const [showFooter, setShowFooter] = useState(false);
 
@@ -18,8 +18,8 @@ const EditUser = (): JSX.Element => {
         setShowFooter(true);
     };
     
-    const onChangeLogin = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setLogin(e.target.value);
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setEmail(e.target.value);
         setShowFooter(true);
     };
 
@@ -30,13 +30,13 @@ const EditUser = (): JSX.Element => {
 
     const onClickCancel = () => {
         setName(initialName);
-        setLogin(initLogin);
+        setEmail(initEmail);
         setShowFooter(false);
     };
 
     const onSubmitForm = (e: React.FormEvent): void => {
         e.preventDefault();
-        dispatch(editUser({name, login, password}));
+        dispatch(editUser({name, email, password}));
         setShowFooter(false);
     };
 
@@ -47,9 +47,9 @@ const EditUser = (): JSX.Element => {
                 type="text"
                 icon="EditIcon"
                 placeholder="Логин"
-                onChange={onChangeLogin}
-                value={login}
-                name="login"
+                onChange={onChangeEmail}
+                value={email}
+                name="email"
             />
             <Input
                 type="password"

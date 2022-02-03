@@ -11,7 +11,7 @@ import {
     LOGOUT_USER,
 } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
-import { IIngredientType } from "../utils/models";
+import { IIngredientType, INewPasswordRequest, IUser } from "../utils/types";
 
 export const getBurgerData = async () => {
     try {
@@ -41,7 +41,7 @@ export const getOrderData = async (ingredients: IIngredientType[]) => {
     }
 };
 
-export const getRegisterUserData = async ({email, password, name}: {email: string; password: number; name: string}) => {
+export const getRegisterUserData = async ({email, password, name}: IUser) => {
     try {
         const res = await fetch(API_URL + REGISTRATION_USER, {
             method: 'POST',
@@ -62,7 +62,7 @@ export const getRegisterUserData = async ({email, password, name}: {email: strin
     }
 };
 
-export const getAuthUserData = async ({email, password}: {email: string; password: number;}) => {
+export const getAuthUserData = async ({email, password}: {email: string; password: string;}) => {
     try {
         const res = await fetch(API_URL + LOGIN_USER, {
             method: 'POST',
@@ -101,7 +101,7 @@ export const getPasswordReset = async (email: string) => {
     }
 };
 
-export const setNewPassword = async ({password, token}: {password: string; token: number;}) => {
+export const setNewPassword = async ({password, token}: INewPasswordRequest) => {
     try {
         const res = await fetch(API_URL + SET_NEW_PASSWORD, {
             method: 'POST',
@@ -158,7 +158,7 @@ export const getUserData = async () => {
     }
 };
 
-export const editUserData = async (userData: {name: string, login: string, password: string}) => {
+export const editUserData = async (userData: IUser) => {
     try {
         const res = await fetch(API_URL + AUTH_USER, {
             method: 'PATCH',

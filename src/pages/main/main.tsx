@@ -7,13 +7,11 @@ import ErrorIndicator from "../../components/error-indicator/error-indicator";
 import Modal from "../../components/modal/modal";
 import OrderDetails from "../../components/order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    ADD_INGREDIENT_DETAILS,
-    DELETE_INGREDIENT_DETAILS,
-    updateOrderDetails
-} from "../../services/actions/burgers";
+import { ADD_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS } from "../../services/constants/burgers"
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { updateOrderDetails } from "../../services/actions/order-details";
+import { IIngredientType } from "../../utils/types";
 
 interface IModal {
     isShow: boolean,
@@ -31,7 +29,7 @@ const Main = () => {
 
     const dispatch = useDispatch();
 
-    const handleOpenModal = (modalType: string, payload: string[]) => {
+    const handleOpenModal = (modalType: string, payload: string | IIngredientType[]) => {
         setModal({ isShow: true, type: modalType });
 
         if (modalType === "modalIngredient") {
@@ -40,7 +38,7 @@ const Main = () => {
                 payload: payload,
             });
         } else {
-            dispatch(updateOrderDetails(payload));
+            dispatch(updateOrderDetails(payload as IIngredientType[]));
         }
     };
 

@@ -1,10 +1,19 @@
+import { IOrderDetailsData } from "../../utils/types";
+import { TOrderDetailsActions } from "../actions/order-details";
 import { 
     UPDATE_ORDER_DETAILS_REQUEST,
     UPDATE_ORDER_DETAILS_SUCCESS,
     UPDATE_ORDER_DETAILS_ERROR
-} from "../actions/burgers";
+} from "../constants/burgers";
 
-const initialState = { 
+type TOrderDetailsState = {
+    updateOrderDetailsRequest: boolean; 
+    updateOrderDetailsSuccess: boolean;
+    updateOrderDetailsError: boolean;
+    orderDetailsData: IOrderDetailsData;
+}
+
+const initialState: TOrderDetailsState = { 
     updateOrderDetailsRequest: false, 
     updateOrderDetailsSuccess: false,
     updateOrderDetailsError: false,
@@ -12,12 +21,12 @@ const initialState = {
         success: false, 
         name: "", 
         order: {
-            number: null
+            number: ""
         }
     }
 };
 
-const orderDetails = (state = initialState, action) => {
+const orderDetails = (state = initialState, action: TOrderDetailsActions) => {
     switch(action.type) {
         case UPDATE_ORDER_DETAILS_REQUEST:
             return {

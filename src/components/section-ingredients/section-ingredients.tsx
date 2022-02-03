@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import sectionIngredientsStyles from "./section-ingredients.module.css";
 import IngredientsItem from "../ingredients-item/ingredients-item";
-import { IIngredientType } from "../../utils/models";
+import { IIngredientType } from "../../utils/types";
 
 interface ISectionIngredients {
     burgerData: IIngredientType[];

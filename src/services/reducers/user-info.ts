@@ -23,7 +23,8 @@ import {
     LOGOUT_USER_REQUEST,
     LOGOUT_USER_SUCCESS,
     LOGOUT_USER_ERROR,
-} from "../actions/user-info";
+} from "../constants/user-info";
+import { TUserInfoActions } from "../actions/user-info";
 
 const initialState = {
     registerUserRequest: false,
@@ -65,10 +66,16 @@ const initialState = {
         message: "",
     },
     loggedIn: false,
+    getUserRequest: false,
+    getUserSuccess: false,
+    getUserError: false,
+    editUserRequest: false,
+    editUserSuccess: false,
+    editUserError: false,
 };
 
-export const userInfo = (state = initialState, { type, payload }) => {
-    switch (type) {
+export const userInfo = (state = initialState, action: TUserInfoActions) => {
+    switch (action.type) {
         case REGISTER_USER_REQUEST:
             return {
                 ...state,
@@ -83,7 +90,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 registerUserRequest: false,
                 registerUserSuccess: true,
                 registerUserError: false,
-                userData: payload,
+                userData: action.payload,
                 loggedIn: true,
             };
         case REGISTER_USER_ERROR:
@@ -108,7 +115,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 authUserRequest: false,
                 authUserSuccess: true,
                 authUserError: false,
-                userData: payload,
+                userData: action.payload,
                 authUser: initialState.authUser,
                 loggedIn: true,
             };
@@ -119,7 +126,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 authUserSuccess: false,
                 authUserError: true,
                 userData: initialState.userData,
-                authUser: payload,
+                authUser: action.payload,
             };
         case PASSWORD_RESET_REQUEST:
             return {
@@ -135,7 +142,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 passwordResetRequest: false,
                 passwordResetSuccess: true,
                 passwordResetError: false,
-                passwordReset: payload,
+                passwordReset: action.payload,
             };
         case PASSWORD_RESET_ERROR:
             return {
@@ -162,7 +169,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 setNewPasswordRequest: false,
                 setNewPasswordSuccess: true,
                 setNewPasswordError: false,
-                setNewPassword: payload,
+                setNewPassword: action.payload,
             };
         case SET_NEW_PASSWORD_ERROR:
             return {
@@ -195,7 +202,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 refreshTokenError: false,
                 userData: {
                     ...state.userData,
-                    ...payload,
+                    ...action.payload,
                 },
                 authUser: initialState.authUser,
             };
@@ -227,7 +234,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 getUserError: false,
                 userData: {
                     ...state.userData,
-                    ...payload,
+                    ...action.payload,
                 },
                 loggedIn: true,
             };
@@ -239,8 +246,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 getUserError: true,
                 userData: {
                     ...state.userData,
-                    email: initialState.userData.email,
-                    name: initialState.userData.name,
+                    user: initialState.userData.user
                 },
             };
         case EDIT_USER_REQUEST:
@@ -261,7 +267,7 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 editUserError: false,
                 userData: {
                     ...state.userData,
-                    ...payload,
+                    ...action.payload,
                 },
             };
         case EDIT_USER_ERROR:
@@ -272,32 +278,31 @@ export const userInfo = (state = initialState, { type, payload }) => {
                 editUserError: true,
                 userData: {
                     ...state.userData,
-                    email: initialState.userData.email,
-                    name: initialState.userData.name,
+                    user: initialState.userData.user
                 },
             };
-            case LOGOUT_USER_REQUEST:
-                return {
-                    ...state,
-                    logoutUserRequest: true,
-                    logoutUserSuccess: false,
-                    logoutUserError: false,
-                };
-            case LOGOUT_USER_SUCCESS:
-                return {
-                    ...initialState,
-                    logoutUserRequest: false,
-                    logoutUserSuccess: true,
-                    logoutUserError: false,
-                    logoutUser: payload,
-                };
-            case LOGOUT_USER_ERROR:
-                return {
-                    ...initialState,
-                    logoutUserRequest: false,
-                    logoutUserSuccess: false,
-                    logoutUserError: true,
-                };
+        case LOGOUT_USER_REQUEST:
+            return {
+                ...state,
+                logoutUserRequest: true,
+                logoutUserSuccess: false,
+                logoutUserError: false,
+            };
+        case LOGOUT_USER_SUCCESS:
+            return {
+                ...initialState,
+                logoutUserRequest: false,
+                logoutUserSuccess: true,
+                logoutUserError: false,
+                logoutUser: action.payload,
+            };
+        case LOGOUT_USER_ERROR:
+            return {
+                ...initialState,
+                logoutUserRequest: false,
+                logoutUserSuccess: false,
+                logoutUserError: true,
+            };
         default:
             return state;
     }

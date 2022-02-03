@@ -8,7 +8,7 @@ import ProtectedRoute from "../protected-route/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { getBurgerIngredients } from "../../services/actions/burgers";
-import { LocationState } from "../../utils/models";
+import { LocationState } from "../../utils/types";
 
 const App = () => {
     const ModalSwitch = () => {

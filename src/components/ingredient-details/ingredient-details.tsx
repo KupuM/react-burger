@@ -3,7 +3,7 @@ import ingredientDetailsStyle from "./ingredient-details.module.css";
 import { useRouteMatch, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Spinner from "../spinner/spinner";
-import { IIngredientType, LocationState } from "../../utils/models";
+import { IIngredientType, LocationState } from "../../utils/types";
 
 interface MatchParams {
     ingredientId: string;
