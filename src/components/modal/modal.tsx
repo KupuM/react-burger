@@ -7,7 +7,7 @@ import { MODAL_ROOT } from "../../utils/constants";
 
 interface IModalProps {
     onClose: () => void;
-    children: JSX.Element;
+    children: JSX.Element | string;
 }
 
 const Modal: FC<IModalProps> = ({onClose, children}) => {

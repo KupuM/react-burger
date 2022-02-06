@@ -25,8 +25,42 @@ import {
     LOGOUT_USER_ERROR,
 } from "../constants/user-info";
 import { TUserInfoActions } from "../actions/user-info";
+import { ISuccessMessageResponse, IUserData } from "../../utils/types";
 
-const initialState = {
+interface IUserInfoState  {
+    registerUserRequest: boolean;
+    registerUserSuccess: boolean;
+    registerUserError: boolean;
+    userData: IUserData;
+    authUserRequest: boolean;
+    authUserSuccess: boolean;
+    authUserError: boolean;
+    authUser: ISuccessMessageResponse;
+    passwordResetRequest: boolean;
+    passwordResetSuccess: boolean;
+    passwordResetError: boolean;
+    passwordReset: ISuccessMessageResponse;
+    setNewPasswordRequest: boolean,
+    setNewPasswordSuccess: boolean,
+    setNewPasswordError: boolean,
+    setNewPassword: ISuccessMessageResponse;
+    refreshTokenRequest: boolean;
+    refreshTokenSuccess: boolean;
+    refreshTokenError: boolean;
+    logoutUserRequest: boolean;
+    logoutUserSuccess: boolean;
+    logoutUserError: boolean;
+    logoutUser: ISuccessMessageResponse;
+    loggedIn: boolean;
+    getUserRequest: boolean;
+    getUserSuccess: boolean;
+    getUserError: boolean;
+    editUserRequest: boolean;
+    editUserSuccess: boolean;
+    editUserError: boolean;
+};
+
+const initialState: IUserInfoState = {
     registerUserRequest: false,
     registerUserSuccess: false,
     registerUserError: false,
@@ -51,6 +85,9 @@ const initialState = {
         success: false,
         message: "",
     },
+    setNewPasswordRequest: false,
+    setNewPasswordSuccess: false,
+    setNewPasswordError: false,
     setNewPassword: {
         success: false,
         message: "",

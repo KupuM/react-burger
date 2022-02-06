@@ -9,7 +9,6 @@ import { store } from "../services/store";
 
 export type TRootState = ReturnType<typeof store.getState>;
 
-// Типизация всех экшенов приложения
 type TApplicationActions = 
     | TBurgerConstructorActions
     | TBurgerActions
@@ -17,12 +16,10 @@ type TApplicationActions =
     | TOrderDetailsActions
     | TUserInfoActions;
 
-// Типизация thunk'ов в нашем приложении
-export type TAppThunk<TReturn = void> = ActionCreator<
+export type TApplicationThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, TRootState, TApplicationActions>
 >;
 
-// Типизация метода dispatch для проверки на валидность отправляемого экшена
 export type TApplicationDispatch = typeof store.dispatch; 
 
 export interface IIngredientType {
@@ -48,7 +45,7 @@ export interface IIngredientConstructorType extends IIngredientType {
 
 export interface IUser {
     email: string,
-    password: string,
+    password?: string,
     name: string,
 }
 
@@ -75,16 +72,14 @@ export interface INewPasswordRequest {
 }
 
 export interface ISuccessMessageResponse {
-    password: string; 
+    success: boolean; 
     message?: string;
 }
 
 export interface IOrderDetailsData {
     success: boolean, 
     name: string, 
-    order: {
-        number: string
-    }
+    order: IOrder,
 }
 
 export interface INavbarItem {
@@ -100,3 +95,20 @@ export interface LocationState {
         pathname?: string;
     };
 }
+
+export interface IOrder {
+    _id: string;
+    ingredients: string[];
+    status: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: string;
+}
+  
+export interface IWSMessage {
+    orders: IOrder[];
+    success: boolean;
+    total: number;
+    totalToday: number;
+};

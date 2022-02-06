@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import resetPasswordStyles from "./reset-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { newPassword } from "../../services/actions/user-info";
 
 const ResetPassword = () => {
@@ -14,8 +14,8 @@ const ResetPassword = () => {
     const {
         setNewPassword: { success, message},
         loggedIn
-    } = useSelector((state: any) => state.userInfo);
-    const {passwordResetSuccess, setNewPasswordError} = useSelector((state: any) => state.userInfo);
+    } = useSelector(state => state.userInfo);
+    const {passwordResetSuccess, setNewPasswordError} = useSelector(state => state.userInfo);
 
     useEffect(() => {
         setWasReloaded(false);

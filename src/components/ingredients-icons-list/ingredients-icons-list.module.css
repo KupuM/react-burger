@@ -1,0 +1,12 @@
+.ingredientIcons {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 64px;
+    list-style: none;
+}
+
+.ingredientsItem {
+    position: absolute;
+}

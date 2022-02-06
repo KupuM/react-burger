@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import SectionNav from "../section-nav/section-nav";
 import SectionIngredients from "../section-ingredients/section-ingredients";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 
 const BurgerIngredients = () => {
     const refBun = useRef<HTMLInputElement>(null);
@@ -28,7 +28,7 @@ const BurgerIngredients = () => {
         },
     ];
 
-    const burgerData: any = useSelector<any>(state => state.burgerIngredients.burgerIngredientsData);
+    const burgerData = useSelector(state => state.burgerIngredients.burgerIngredientsData);
 
     const compareCoordsAndSetActiveItem = (bunTop: number, sauceTop: number, mainTop: number, burgerIngredientsWrapperTop: number): void => {
         if (bunTop < burgerIngredientsWrapperTop && sauceTop > burgerIngredientsWrapperTop) {

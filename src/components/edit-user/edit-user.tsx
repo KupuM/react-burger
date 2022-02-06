@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import editUserStyles from "./edit-user.module.css";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { editUser } from "../../services/actions/user-info";
 
 const EditUser = (): JSX.Element => {
-    const { name: initialName, email: initEmail }: any = useSelector<any>(state => state.userInfo.userData.user);
+    const { name: initialName, email: initEmail } = useSelector(state => state.userInfo.userData.user);
     const [name, setName ] = useState<string>(initialName);
     const [email, setEmail ] = useState<string>(initEmail);
     const [password, setPassword] = useState('');

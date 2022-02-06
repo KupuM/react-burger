@@ -3,7 +3,7 @@ import { TOrderDetailsActions } from "../actions/order-details";
 import { 
     UPDATE_ORDER_DETAILS_REQUEST,
     UPDATE_ORDER_DETAILS_SUCCESS,
-    UPDATE_ORDER_DETAILS_ERROR
+    UPDATE_ORDER_DETAILS_ERROR,
 } from "../constants/burgers";
 
 type TOrderDetailsState = {
@@ -11,6 +11,9 @@ type TOrderDetailsState = {
     updateOrderDetailsSuccess: boolean;
     updateOrderDetailsError: boolean;
     orderDetailsData: IOrderDetailsData;
+    postOrderRequest: boolean;
+    postOrderSuccess: boolean;
+    postOrderError: boolean;
 }
 
 const initialState: TOrderDetailsState = { 
@@ -21,9 +24,18 @@ const initialState: TOrderDetailsState = {
         success: false, 
         name: "", 
         order: {
-            number: ""
+            _id: "",
+            ingredients: [],
+            status: "",
+            name: "",
+            createdAt: "",
+            updatedAt: "",
+            number: "",
         }
-    }
+    },
+    postOrderRequest: false,
+    postOrderSuccess: false,
+    postOrderError: false,
 };
 
 const orderDetails = (state = initialState, action: TOrderDetailsActions) => {

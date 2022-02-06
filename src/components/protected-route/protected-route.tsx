@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 
 interface IProtectedRouteProps {
     path: string;
@@ -8,11 +8,11 @@ interface IProtectedRouteProps {
 }
 
 const ProtectedRoute: FC<IProtectedRouteProps>= ({children, ...rest}) => {
-    const loggedIn = useSelector((state: any) => state.userInfo.loggedIn);
+    const loggedIn = useSelector(state => state.userInfo.loggedIn);
 
     return (
         <Route
-            {...rest}
+            {...rest} 
             render={({location}) => loggedIn ? (
                 children
             ) : (

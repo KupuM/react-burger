@@ -2,7 +2,7 @@ import {
     UPDATE_ORDER_DETAILS_ERROR,
     UPDATE_ORDER_DETAILS_REQUEST,
     UPDATE_ORDER_DETAILS_SUCCESS,
-    DELETE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST
+    DELETE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST,
 } from "../constants/burgers";
 
 import { IIngredientType, IOrderDetailsData, TApplicationDispatch } from "../../utils/types";

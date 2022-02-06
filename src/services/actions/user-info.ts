@@ -35,7 +35,7 @@ import {
     LOGOUT_USER_SUCCESS,
     LOGOUT_USER_ERROR
 } from "../constants/user-info";
-import { IAuthUser, INewPasswordRequest, ISuccessMessageResponse, IUser, IUserData, TApplicationDispatch, TAppThunk } from "../../utils/types";
+import { IAuthUser, INewPasswordRequest, ISuccessMessageResponse, IUser, IUserData, TApplicationDispatch, TApplicationThunk } from "../../utils/types";
 
 export interface IRegisterUserRequest {
     readonly type: typeof REGISTER_USER_REQUEST;
@@ -239,7 +239,7 @@ export function newPassword(userData: INewPasswordRequest) {
     }
 }
 
-export const getUser: TAppThunk = () => (dispatch) => {
+export const getUser: TApplicationThunk = () => (dispatch) => {
     dispatch({type: GET_USER_REQUEST});
     getUserData()
     .then(res => {
@@ -260,7 +260,7 @@ export const getUser: TAppThunk = () => (dispatch) => {
     })
 }
 
-export const refreshToken: TAppThunk = (afterRefresh) => (dispatch: TApplicationDispatch) => {
+export const refreshToken: TApplicationThunk = (afterRefresh) => (dispatch: TApplicationDispatch) => {
     dispatch({type: REFRESH_TOKEN_REQUEST});
     getNewToken().then(res => {
         if (res && res.success) {

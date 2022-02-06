@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import loginStyles from "./login.module.css";
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { authUser } from "../../services/actions/user-info";
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
     const { 
         authUser: {success, message},
         loggedIn,
-    } = useSelector((state: any) => state.userInfo);
+    } = useSelector(state => state.userInfo);
     
     const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value)

@@ -1,0 +1,47 @@
+.wrapper {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(60deg, #752DBE, #6C64F1);
+}
+
+.icon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    top: 2px;
+    right: 2px;
+    bottom: 2px;
+    left: 2px;
+    border-radius: inherit;
+    background: #131316;
+    text-align: center;
+}
+
+.image, .imageOpacity {
+    height: 50px;
+    position: relative;
+    top: 5px;
+    left: -20px;
+    z-index: 10;
+}
+
+.imageOpacity {
+    opacity: 0.6;
+}
+
+.text {
+    position: absolute;
+    width: 60px;
+    top: 0;
+    bottom: 0;
+    left: auto;
+    right: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: 20;
+    text-align: center;
+    font-size: 16px;
+}

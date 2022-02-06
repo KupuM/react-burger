@@ -32,15 +32,6 @@ const burgerConstructor = (state = initialState, action: TBurgerConstructorActio
                 }
             }
         case DELETE_BURGER_CONSTRUCTOR_INGREDIENT:
-            // if (action.payload.type === "bun") {
-            //     return {
-            //         buns: [
-            //             ...state.buns.slice(0, action.payload),
-            //             ...state.buns.slice(action.payload + 1)
-            //         ],
-            //         otherIngredients: [...state.otherIngredients]
-            //     }
-            // }
             return {
                 buns: [...state.buns],
                 otherIngredients: [

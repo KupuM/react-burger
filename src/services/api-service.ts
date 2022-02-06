@@ -27,11 +27,14 @@ export const getOrderData = async (ingredients: IIngredientType[]) => {
     try {
         const res = await fetch(API_URL + ORDERS, {
             method: 'POST',
+            mode: 'cors',
+            //@ts-ignore
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type': 'application/json;charset=utf-8',
+                'authorization': getCookie('accessToken')
             },
             body: JSON.stringify({
-                ingredients: ingredients
+                ingredients: ingredients,
             })
         });
         return await res.json();
@@ -40,6 +43,7 @@ export const getOrderData = async (ingredients: IIngredientType[]) => {
         throw error;
     }
 };
+
 
 export const getRegisterUserData = async ({email, password, name}: IUser) => {
     try {
@@ -195,3 +199,24 @@ export const logoutUserData = async () => {
         throw error;
     }
 }
+
+export const postOrderData = async (ingredientsIds: string[]) => {
+    try {
+        const res = await fetch(API_URL + ORDERS, {
+            method: 'POST',
+            mode: 'cors',
+            //@ts-ignore
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'authorization': getCookie('accessToken')
+            },
+            body: JSON.stringify({
+                ingredients: ingredientsIds,
+            })
+        });
+        return await res.json();
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};

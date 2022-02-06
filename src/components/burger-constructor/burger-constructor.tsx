@@ -1,12 +1,13 @@
 import React, {FC, useCallback} from "react";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { useDrop } from "react-dnd";
 import {
     ADD_BURGER_CONSTRUCTOR_INGREDIENT,
     UPDATE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST,
     BURGER_INGREDIENT_COUNTER_INCREMENT,
+    BURGER_INGREDIENT_COUNTER_RESET,
 } from "../../services/constants/burgers";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item"
 import { v4 as uuidv4 } from 'uuid';
@@ -14,18 +15,19 @@ import { useLocation, useHistory } from "react-router-dom";
 import { IIngredientType } from "../../utils/types";
 
 interface IBurgerConstructorProps {
-    openModal: (modalType: string, payload: string | IIngredientType[]) => void;
+    openModal: (modalType: string, payload: string | string[] | IIngredientType[]) => void;
 }
 
 const BurgerConstructor: FC<IBurgerConstructorProps> = ({openModal}) => {
     const { 
         burgerConstructor: {buns, otherIngredients },
         userInfo: { loggedIn }
-    } = useSelector((store: any) => store)
+    } = useSelector((store) => store)
     const total = 
         buns.map((item: IIngredientType) => item.price).reduce((prev: number, curr: number) => prev + curr, 0) +
         otherIngredients.map((item: IIngredientType) => item.price).reduce((prev: number, curr: number) => prev + curr, 0);
-    const burgerConstructorIngredientsIds = [...buns.map((item: IIngredientType) => item._id), ...otherIngredients.map((item: IIngredientType) => item._id)];
+    const burgerConstructorIngredientsIds = [...buns.map((item: IIngredientType) => item._id).slice(1), ...otherIngredients.map((item: IIngredientType) => item._id)];
+
     const dispatch = useDispatch();
     const location = useLocation();
     const history = useHistory();
@@ -54,7 +56,10 @@ const BurgerConstructor: FC<IBurgerConstructorProps> = ({openModal}) => {
         if (!buns[0]) return;
 
         if (loggedIn) {
+            dispatch({type: BURGER_INGREDIENT_COUNTER_RESET});
+            //dispatch(postOrder(burgerConstructorIngredientsIds));
             openModal('modalOrder', burgerConstructorIngredientsIds);
+            dispatch({type: BURGER_INGREDIENT_COUNTER_RESET});
         } else {
             history.push({
                 pathname: '/login',

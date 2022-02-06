@@ -6,6 +6,7 @@ import {
     GET_BURGER_INGREDIENTS_ERROR,
     BURGER_INGREDIENT_COUNTER_INCREMENT,
     BURGER_INGREDIENT_COUNTER_DECREMENT,
+    BURGER_INGREDIENT_COUNTER_RESET
 } from "../constants/burgers";
 
 export interface IGetBurgerIngredientsRequest {
@@ -31,12 +32,17 @@ export interface IBurgerIngredientCounterDecrement {
     readonly payload: {id: string};
 }
 
+export interface IBurgerIngredientCounterReset {
+    readonly type: typeof BURGER_INGREDIENT_COUNTER_RESET;
+}
+
 export type TBurgerActions =
     | IGetBurgerIngredientsRequest
     | IGetBurgerIngredientsSuccess
     | IGetBurgerIngredientsError
     | IBurgerIngredientCounterIncrement
-    | IBurgerIngredientCounterDecrement;
+    | IBurgerIngredientCounterDecrement
+    | IBurgerIngredientCounterReset;
 
 export function getBurgerIngredients() {
     return function(dispatch: TApplicationDispatch) {

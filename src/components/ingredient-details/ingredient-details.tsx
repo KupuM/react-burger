@@ -1,7 +1,7 @@
 import React from "react";
 import ingredientDetailsStyle from "./ingredient-details.module.css";
 import { useRouteMatch, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import Spinner from "../spinner/spinner";
 import { IIngredientType, LocationState } from "../../utils/types";
 
@@ -11,11 +11,11 @@ interface MatchParams {
 
 const IngredientDetails = () => {
     const { params: {ingredientId} } = useRouteMatch<MatchParams>();
-    const burgerIngredientsData: any = useSelector<any>((state) => state.burgerIngredients.burgerIngredientsData);
+    const burgerIngredientsData = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
     const location = useLocation<LocationState>();
     const background = location.state && location.state.background;
 
-    const getIngredient = (id: string) => burgerIngredientsData.find((item: IIngredientType) => item._id === id); 
+    const getIngredient = (id: string) => burgerIngredientsData.find((item: IIngredientType) => item._id === id)!; 
 
     if (burgerIngredientsData.length === 0) return <Spinner />;
     

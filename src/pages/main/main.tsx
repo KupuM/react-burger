@@ -6,7 +6,7 @@ import Spinner from "../../components/spinner/spinner";
 import ErrorIndicator from "../../components/error-indicator/error-indicator";
 import Modal from "../../components/modal/modal";
 import OrderDetails from "../../components/order-details/order-details";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { ADD_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS } from "../../services/constants/burgers"
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -25,11 +25,11 @@ const Main = () => {
     });
 
     const { burgerIngredientsRequest, burgerIngredientsSuccess, burgerIngredientsError } =
-        useSelector((state: any) => state.burgerIngredients);
+        useSelector(state => state.burgerIngredients);
 
     const dispatch = useDispatch();
 
-    const handleOpenModal = (modalType: string, payload: string | IIngredientType[]) => {
+    const handleOpenModal = (modalType: string, payload: string | string[] | IIngredientType[]) => {
         setModal({ isShow: true, type: modalType });
 
         if (modalType === "modalIngredient") {
@@ -49,7 +49,7 @@ const Main = () => {
         });
     };
 
-    const { orderDetailsData, updateOrderDetailsRequest, updateOrderDetailsError } = useSelector((state: any) => state.orderDetails);
+    const { orderDetailsData, updateOrderDetailsRequest, updateOrderDetailsError } = useSelector(state => state.orderDetails);
 
     return (
         

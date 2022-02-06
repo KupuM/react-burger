@@ -18,7 +18,7 @@ const navbarLeftConstructor: INavbarItem[] = [
         title: 'Лента заказов',
         icon: <ListIcon type="secondary" />,
         iconActive: <ListIcon type="primary" />,
-        link: '/history',
+        link: '/feed',
         isStrictMatch: true,
     }
 ];

@@ -1,0 +1,56 @@
+.wrapper {
+    width: 640px;
+}
+
+.ingredients {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.orderInfo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ingredientWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.ingredientInfo {
+    display: flex;
+    align-items: center;
+}
+
+.listWrapper {
+    overflow-y: auto;
+    height: 300px;
+}
+
+.name {
+    align-self: flex-start;
+}
+
+.title {
+    align-self: flex-start;
+}
+
+.done {
+    color: #00CCCC;
+}
+
+.status {
+    align-self: flex-start;
+}
+
+.price {
+    display: inline-flex;
+    align-items: center;
+}
+
+.price svg {
+    margin-left: 10px;
+    margin-right: 24px;
+}
