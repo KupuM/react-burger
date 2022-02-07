@@ -36,6 +36,7 @@ import {
     LOGOUT_USER_ERROR
 } from "../constants/user-info";
 import { IAuthUser, INewPasswordRequest, ISuccessMessageResponse, IUser, IUserData, TApplicationDispatch, TApplicationThunk } from "../../utils/types";
+import { checkResponse } from "../../utils/utils";
 
 export interface IRegisterUserRequest {
     readonly type: typeof REGISTER_USER_REQUEST;
@@ -169,48 +170,65 @@ export type TUserInfoActions =
     | ILogoutUserError;
 
 export function registerUser(userData: IUser) {
-    return function(dispatch: TApplicationDispatch) {
-        dispatch({type: REGISTER_USER_REQUEST});
-        getRegisterUserData(userData).then(res => {
-            if (res && res.success) {
+    return function (dispatch: TApplicationDispatch) {
+        dispatch({ type: REGISTER_USER_REQUEST });
+        getRegisterUserData(userData)
+            .then(checkResponse)
+            .then((res) => {
+                if (res && res.success) {
+                    dispatch({
+                        type: REGISTER_USER_SUCCESS,
+                        payload: res,
+                    });
+                    localStorage.setItem("refreshToken", res.refreshToken);
+                    setCookie("accessToken", res.accessToken, { expires: 31536000 });
+                } else {
+                    dispatch({ type: REGISTER_USER_ERROR });
+                }
+            })
+            .catch(() => {
                 dispatch({
-                    type: REGISTER_USER_SUCCESS,
-                    payload: res
-                })
-               localStorage.setItem('refreshToken', res.refreshToken);
-               setCookie('accessToken', res.accessToken, { expires: 1200 });
-            } else {
-                dispatch({type: REGISTER_USER_ERROR});
-            }
-        })
-    }
+                    type: REGISTER_USER_ERROR,
+                });
+            });
+    };
 }
 
 export function authUser(userData: IAuthUser) {
-    return function(dispatch: TApplicationDispatch) {
-        dispatch({type: AUTH_USER_REQUEST});
-        getAuthUserData(userData).then(res => {
-            if (res && res.success) {
-                localStorage.setItem('refreshToken', res.refreshToken);
-                setCookie('accessToken', res.accessToken, { expires: 1200 });
-                dispatch({
-                    type: AUTH_USER_SUCCESS,
-                    payload: res
-                })            
-            } else {
+    return function (dispatch: TApplicationDispatch) {
+        dispatch({ type: AUTH_USER_REQUEST });
+        getAuthUserData(userData)
+            .then(checkResponse)
+            .then((res) => {
+                if (res && res.success) {
+                    localStorage.setItem("refreshToken", res.refreshToken);
+                    setCookie("accessToken", res.accessToken, { expires: 31536000 });
+                    dispatch({
+                        type: AUTH_USER_SUCCESS,
+                        payload: res,
+                    });
+                } else {
+                    dispatch({
+                        type: AUTH_USER_ERROR,
+                        payload: res,
+                    });
+                }
+            })
+            .catch((err) => {
                 dispatch({
                     type: AUTH_USER_ERROR,
-                    payload: res
+                    payload: err,
                 });
-            }
-        })
-    }
+            });
+    };
 }
 
 export function passwordReset(email: string) {
     return function(dispatch: TApplicationDispatch) {
         dispatch({type: PASSWORD_RESET_REQUEST});
-        getPasswordReset(email).then(res => {
+        getPasswordReset(email)
+            .then(checkResponse)
+            .then(res => {
             if (res && res.success) {
                 dispatch({
                     type: PASSWORD_RESET_SUCCESS,
@@ -224,24 +242,27 @@ export function passwordReset(email: string) {
 }
 
 export function newPassword(userData: INewPasswordRequest) {
-    return function(dispatch: TApplicationDispatch) {
-        dispatch({type: SET_NEW_PASSWORD_REQUEST});
-        setNewPassword(userData).then(res => {
-            if (res && res.success) {
-                dispatch({
-                    type: SET_NEW_PASSWORD_SUCCESS,
-                    payload: res
-                })
-            } else {
-                dispatch({type: SET_NEW_PASSWORD_ERROR});
-            }
-        })
-    }
+    return function (dispatch: TApplicationDispatch) {
+        dispatch({ type: SET_NEW_PASSWORD_REQUEST });
+        setNewPassword(userData)
+            .then(checkResponse)
+            .then((res) => {
+                if (res && res.success) {
+                    dispatch({
+                        type: SET_NEW_PASSWORD_SUCCESS,
+                        payload: res,
+                    });
+                } else {
+                    dispatch({ type: SET_NEW_PASSWORD_ERROR });
+                }
+            });
+    };
 }
 
 export const getUser: TApplicationThunk = () => (dispatch) => {
     dispatch({type: GET_USER_REQUEST});
     getUserData()
+    .then(checkResponse)
     .then(res => {
         if (res) {
             if (!res.success) throw res;
@@ -262,51 +283,72 @@ export const getUser: TApplicationThunk = () => (dispatch) => {
 
 export const refreshToken: TApplicationThunk = (afterRefresh) => (dispatch: TApplicationDispatch) => {
     dispatch({type: REFRESH_TOKEN_REQUEST});
-    getNewToken().then(res => {
-        if (res && res.success) {
+    getNewToken()
+        .then(checkResponse)
+        .then((res) => {
+            if (res && res.success) {
+                dispatch({
+                    type: REFRESH_TOKEN_SUCCESS,
+                    payload: res,
+                });
+                setCookie("accessToken", res.accessToken, { expires: 31536000 });
+                localStorage.setItem("refreshToken", res.refreshToken);
+                if (afterRefresh) dispatch(afterRefresh);
+            } else {
+                dispatch({ type: REFRESH_TOKEN_ERROR });
+            }
+        })
+        .catch(() => {
             dispatch({
-                type: REFRESH_TOKEN_SUCCESS,
-                payload: res
-            })
-            setCookie('accessToken', res.accessToken, { expires: 31536000 });
-            localStorage.setItem('refreshToken', res.refreshToken);
-            if (afterRefresh) dispatch(afterRefresh);
-        } else {
-            dispatch({type: REFRESH_TOKEN_ERROR});
-        }
-    })
+                type: REFRESH_TOKEN_ERROR,
+            });
+        });
 }
 
 export function editUser(userData: IUser) {
   return async function(dispatch: TApplicationDispatch) {
     dispatch({type: EDIT_USER_REQUEST});
-    editUserData(userData).then(res => {
-        if (res && res.success) {
+    editUserData(userData)
+        .then(checkResponse)
+        .then((res) => {
+            if (res && res.success) {
+                dispatch({
+                    type: EDIT_USER_SUCCESS,
+                    payload: res,
+                });
+            } else {
+                dispatch({ type: EDIT_USER_ERROR });
+            }
+        })
+        .catch(() => {
             dispatch({
-                type: EDIT_USER_SUCCESS,
-                payload: res
+                type: EDIT_USER_ERROR,
             });
-        } else {
-            dispatch({type: EDIT_USER_ERROR});
-        }
-    })
+        });
   }
 }
 
 export function logoutUser() {
     return async function(dispatch: TApplicationDispatch) {
         dispatch({type: LOGOUT_USER_REQUEST});
-        logoutUserData().then(res => {
-            if (res && res.success) {
+        logoutUserData()
+            .then(checkResponse)
+            .then((res) => {
+                if (res && res.success) {
+                    dispatch({
+                        type: LOGOUT_USER_SUCCESS,
+                        payload: res,
+                    });
+                    deleteCookie("accessToken");
+                    localStorage.removeItem("refreshToken");
+                } else {
+                    dispatch({ type: LOGOUT_USER_ERROR });
+                }
+            })
+            .catch(() => {
                 dispatch({
-                    type: LOGOUT_USER_SUCCESS,
-                    payload: res
+                    type: LOGOUT_USER_ERROR,
                 });
-                deleteCookie('accessToken');
-                localStorage.removeItem('refreshToken');
-            } else {
-                dispatch({type: LOGOUT_USER_ERROR});
-            }
-        })
+            });
     }
 }

@@ -14,6 +14,10 @@ interface IFeedItemProps {
 const FeedItem: FC<IFeedItemProps> = ({ orderData }) => {
     const burgerIngredientsAll = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
     const location = useLocation();
+    let linkPath: string = "/feed/";
+    if (location.pathname.indexOf('orders') !== -1) {
+        linkPath = "/profile/orders/"
+    } 
 
     const numberIconsToRender = 5;
     const orderIngredients = getOrderIngredients(orderData.ingredients, burgerIngredientsAll);
@@ -23,7 +27,7 @@ const FeedItem: FC<IFeedItemProps> = ({ orderData }) => {
     return (
         <Link
             to={{
-                pathname: `/feed/${orderData._id}`,
+                pathname: linkPath + orderData._id,
                 state: { background: location },
             }}
             className={FeedItemStyles.link}

@@ -4,21 +4,22 @@ import FeedItem from "../../components/feed-item/feed-item";
 import { useDispatch, useSelector } from "../../utils/hooks"
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from "../../services/actions/websocket";
 import { IOrder } from "../../utils/types";
+import Spinner from "../../components/spinner/spinner";
 
 const Feed: FC = () => {
     const dispatch = useDispatch();
     const {orders, total, totalToday} = useSelector(store => store.websocket);
 
     useEffect(() => {
-        dispatch({ type: WS_CONNECTION_START, payload: "" });
+        dispatch({ type: WS_CONNECTION_START});
 
         return () => {
-            dispatch({ type: WS_CONNECTION_CLOSE, payload: "" });
+            dispatch({ type: WS_CONNECTION_CLOSE});
         };
     }, []);
 
-    if (!orders.length) {
-        return null;
+    if (!orders || !orders.length) {
+        return <Spinner />
     }
 
     return (

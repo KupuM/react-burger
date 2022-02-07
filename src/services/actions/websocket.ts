@@ -6,12 +6,10 @@ export const WS_GET_MESSAGE: 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE';
 
 export interface IWSConnectionStart {
     readonly type: typeof WS_CONNECTION_START;
-    readonly payload: any;
 };
 
 export interface IWSConnectionStartWithToken {
     readonly type: typeof WS_CONNECTION_START_WITH_TOKEN;
-    readonly payload: any;
 };
 
 export interface IWSConnectionSuccess {
@@ -21,7 +19,6 @@ export interface IWSConnectionSuccess {
 
 export interface IWSConnectionClose {
     readonly type: typeof WS_CONNECTION_CLOSE;
-    readonly payload: any;
 }
 
 export interface IWSGetMessage {

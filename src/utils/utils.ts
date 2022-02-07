@@ -32,3 +32,10 @@ export const getOrderIngredientsIcons = (orderIngredients: IIngredientType[]): s
     }, []);
     return ingredientsIcons;
 };
+
+export const checkResponse = async (res: Response) => {
+    if (!res.ok) {
+        return Promise.reject(new Error(res.statusText))
+    }
+    return await res.json();
+}

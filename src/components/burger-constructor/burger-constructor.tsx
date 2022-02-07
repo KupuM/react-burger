@@ -57,7 +57,6 @@ const BurgerConstructor: FC<IBurgerConstructorProps> = ({openModal}) => {
 
         if (loggedIn) {
             dispatch({type: BURGER_INGREDIENT_COUNTER_RESET});
-            //dispatch(postOrder(burgerConstructorIngredientsIds));
             openModal('modalOrder', burgerConstructorIngredientsIds);
             dispatch({type: BURGER_INGREDIENT_COUNTER_RESET});
         } else {

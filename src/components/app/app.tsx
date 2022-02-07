@@ -49,7 +49,13 @@ const App = () => {
                     <Route path="/login" exact>
                         <Login />
                     </Route>
+                    <ProtectedRoute path="/profile/orders/:orderId" exact>
+                        <FeedDetails />
+                    </ProtectedRoute>
                     <ProtectedRoute path="/profile">
+                        <Profile />
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/profile/orders" exact>
                         <Profile />
                     </ProtectedRoute>
                     <Route path="/register" exact>

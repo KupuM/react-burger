@@ -34,7 +34,7 @@ const Profile = () => {
                         <Route path={path} exact>
                             <EditUser />
                         </Route>
-                        <Route path={`${path}/orders`}>
+                        <Route path={`${path}/orders`} exact>
                             <OrdersHistory />
                         </Route>
                     </Switch>

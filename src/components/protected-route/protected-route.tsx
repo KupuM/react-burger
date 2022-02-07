@@ -5,6 +5,7 @@ import { useSelector } from "../../utils/hooks";
 interface IProtectedRouteProps {
     path: string;
     children: JSX.Element;
+    exact?: boolean | undefined;
 }
 
 const ProtectedRoute: FC<IProtectedRouteProps>= ({children, ...rest}) => {

@@ -1,4 +1,5 @@
 import { IIngredientType, TApplicationDispatch } from "../../utils/types";
+import { checkResponse } from "../../utils/utils";
 import { getBurgerData } from "../api-service";
 import {
     GET_BURGER_INGREDIENTS_REQUEST,
@@ -45,17 +46,20 @@ export type TBurgerActions =
     | IBurgerIngredientCounterReset;
 
 export function getBurgerIngredients() {
-    return function(dispatch: TApplicationDispatch) {
-        dispatch({type: GET_BURGER_INGREDIENTS_REQUEST});
-        getBurgerData().then(res => {
-            if (res && res.success) {
+    return function (dispatch: TApplicationDispatch) {
+        dispatch({ type: GET_BURGER_INGREDIENTS_REQUEST });
+        getBurgerData()
+            .then(checkResponse)
+            .then((res) => {
                 dispatch({
                     type: GET_BURGER_INGREDIENTS_SUCCESS,
-                    payload: res.data
-                })
-            } else {
-                dispatch({type: GET_BURGER_INGREDIENTS_ERROR})
-            }
-        })
-    }
+                    payload: res.data,
+                });
+            })
+            .catch(() => {
+                dispatch({
+                    type: GET_BURGER_INGREDIENTS_ERROR,
+                });
+            });
+    };
 }

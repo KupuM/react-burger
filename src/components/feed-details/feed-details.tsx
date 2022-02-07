@@ -47,16 +47,8 @@ interface MatchParams {
 const FeedDetails = () => {
     const dispatch = useDispatch();
     const {state, pathname} = useLocation<LocationState>();
-    const { params: {orderId},  } = useRouteMatch<MatchParams>();
-    const orders = useSelector(store => store.websocket.orders)  
+    const { params: {orderId}  } = useRouteMatch<MatchParams>();
     const background = state && state.background;
-
-    const burgerIngredientsAll = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
-    const getOrderDetails = (orderId: string) => orders.find((item: IOrder) => item._id === orderId)!; 
-    const { number, name, status, createdAt, ingredients } = getOrderDetails(orderId);
-    const detailIngredients = getOrderIngredients(ingredients, burgerIngredientsAll);
-    const filteredDetailIngredients = detailIngredients.filter(item => ingredients.includes(item._id));
-    const uniqueIngredients = Array.from(new Set(filteredDetailIngredients));
 
     useEffect(() => {
         if (pathname.indexOf("feed") !== -1 && !background) {
@@ -70,26 +62,30 @@ const FeedDetails = () => {
                 });
             }
         }
-        if (!background) {
-            return () => {
-                dispatch({ type: WS_CONNECTION_CLOSE})
-            }
+        return () => {
+            dispatch({ type: WS_CONNECTION_CLOSE})
         }
     }, [dispatch, pathname, background]);
 
     const quantity = useCallback(
-        (id: string) => {
+        (id: string, ingredients) => {
             return ingredients.reduce((sum: number, item: string) => (item === id ? sum + 1 : sum), 0);
-        },
-        [ingredients]
+        }, []
     );
 
-    if (orders.length === 0) {
+    const burgerIngredientsAll = useSelector((state) => state.burgerIngredients.burgerIngredientsData);
+    const orders = useSelector(store => store.websocket.orders);
+    if (!orders || orders.length === 0) {
         return <Spinner />;
     }
+    const getOrderDetails = (orderId: string) => orders.find((item: IOrder) => item._id === orderId)!;
+    const { number, name, status, createdAt, ingredients } = getOrderDetails(orderId);
+    const detailIngredients = getOrderIngredients(ingredients, burgerIngredientsAll);
+    const filteredDetailIngredients = detailIngredients.filter(item => ingredients.includes(item._id));
+    const uniqueIngredients = Array.from(new Set(filteredDetailIngredients));
 
     return (
-        <div className={feedDetailsStyle.wrapper}>
+        <div className={!background ? feedDetailsStyle.wrapper : undefined}>
             <p className="text text_type_digits-default mt-3 mb-10">#{number}</p>
             <p className={`${feedDetailsStyle.name} text text_type_main-medium mb-3`}>{name}</p>
             <p className={`${feedDetailsStyle.status} ${status === "done" && feedDetailsStyle.done} text text_type_main-small mb-15`}>
@@ -99,7 +95,7 @@ const FeedDetails = () => {
                 <h3 className={`${feedDetailsStyle.title} text text_type_main-medium mb-6`}>Состав:</h3>
                 <div className={`${feedDetailsStyle.listWrapper} custom-scroll`}>
                     {uniqueIngredients.map((item: IIngredientType) => (
-                        <DetailIngredientsItem key={item._id} item={item} quantity={quantity(item._id)} />
+                        <DetailIngredientsItem key={item._id} item={item} quantity={quantity(item._id, ingredients)} />
                     ))}
                 </div>
             </div>
