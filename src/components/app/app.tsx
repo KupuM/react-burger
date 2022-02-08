@@ -89,14 +89,14 @@ const App = () => {
                             </Modal>
                         }
                         ></Route>
-                        <Route
+                        <ProtectedRoute 
                         path="/profile/orders/:orderId"
                         children={
                             <Modal onClose={handleCloseModal}>
                                 <FeedDetails />
                             </Modal>
                         }
-                        ></Route>
+                        ></ProtectedRoute>
                     </>
                     
                     
