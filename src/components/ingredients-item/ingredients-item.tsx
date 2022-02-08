@@ -3,7 +3,7 @@ import ingredientsItemStyles from "./ingredients-item.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
-import { IIngredientType } from "../../utils/models";
+import { IIngredientType } from "../../utils/types";
 
 interface IIngredientsItemProps {
     item: IIngredientType;

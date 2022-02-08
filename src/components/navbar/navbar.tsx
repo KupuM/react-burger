@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { INavbarItem } from "../../utils/models";
+import { INavbarItem } from "../../utils/types";
 import NavButton from '../nav-button/nav-button';
 import NavbarStyles from './navbar.module.css';
 

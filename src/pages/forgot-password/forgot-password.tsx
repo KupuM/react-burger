@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import forgotPasswordStyles from "./forgot-password.module.css";
 
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { passwordReset } from "../../services/actions/user-info";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { getCookie } from "../../utils/cookie";
@@ -11,7 +11,7 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
     const history: any = useHistory();
-    const { success, message } = useSelector((state: any) => state.userInfo.passwordReset);
+    const { success, message } = useSelector((state) => state.userInfo.passwordReset);
     
     const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value)

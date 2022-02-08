@@ -4,7 +4,7 @@ import Navbar from '../navbar/navbar';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from "react-router-dom";
-import { INavbarItem } from "../../utils/models";
+import { INavbarItem } from "../../utils/types";
 
 const navbarLeftConstructor: INavbarItem[] = [
     {
@@ -18,7 +18,7 @@ const navbarLeftConstructor: INavbarItem[] = [
         title: 'Лента заказов',
         icon: <ListIcon type="secondary" />,
         iconActive: <ListIcon type="primary" />,
-        link: '/history',
+        link: '/feed',
         isStrictMatch: true,
     }
 ];

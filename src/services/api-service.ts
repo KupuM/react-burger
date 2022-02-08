@@ -11,187 +11,145 @@ import {
     LOGOUT_USER,
 } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
-import { IIngredientType } from "../utils/models";
+import { IIngredientType, INewPasswordRequest, IUser } from "../utils/types";
 
-export const getBurgerData = async () => {
-    try {
-        const res = await fetch(API_URL + INGREDIENTS);
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+export const getBurgerData = () => {
+    return fetch(API_URL + INGREDIENTS);
 };
 
-export const getOrderData = async (ingredients: IIngredientType[]) => {
-    try {
-        const res = await fetch(API_URL + ORDERS, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                ingredients: ingredients
-            })
-        });
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+export const getOrderData = (ingredients: IIngredientType[]) => {
+    return fetch(API_URL + ORDERS, {
+        method: "POST",
+        mode: "cors",
+        //@ts-ignore
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            authorization: getCookie("accessToken"),
+        },
+        body: JSON.stringify({
+            ingredients: ingredients,
+        }),
+    });
 };
 
-export const getRegisterUserData = async ({email, password, name}: {email: string; password: number; name: string}) => {
-    try {
-        const res = await fetch(API_URL + REGISTRATION_USER, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                email: email, 
-                password: password, 
-                name: name,
-            })
-        });
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+export const getRegisterUserData = ({ email, password, name }: IUser) => {
+    return fetch(API_URL + REGISTRATION_USER, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            name: name,
+        }),
+    });
 };
 
-export const getAuthUserData = async ({email, password}: {email: string; password: number;}) => {
-    try {
-        const res = await fetch(API_URL + LOGIN_USER, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                email: email, 
-                password: password,
-            })
-        });
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+export const getAuthUserData = ({ email, password }: { email: string; password: string }) => {
+    return fetch(API_URL + LOGIN_USER, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password,
+        }),
+    });
 };
 
-export const getPasswordReset = async (email: string) => {
-    try {
-        const res = await fetch(API_URL + PASSWORD_RESET, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                email: email, 
-            })
-        });
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+export const getPasswordReset = (email: string) => {
+    return fetch(API_URL + PASSWORD_RESET, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+            email: email,
+        }),
+    });
 };
 
-export const setNewPassword = async ({password, token}: {password: string; token: number;}) => {
-    try {
-        const res = await fetch(API_URL + SET_NEW_PASSWORD, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                password: password,
-                token: token,
-            })
-        });
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+export const setNewPassword = ({ password, token }: INewPasswordRequest) => {
+    return fetch(API_URL + SET_NEW_PASSWORD, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+            password: password,
+            token: token,
+        }),
+    });
 };
 
-export const getNewToken = async () => {
-    try {
-        const res = await fetch(API_URL + TOKEN_REFRESH, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                token: localStorage.getItem('refreshToken'),
-            })
-        });
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+export const getNewToken = () => {
+    return fetch(API_URL + TOKEN_REFRESH, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+            token: localStorage.getItem("refreshToken"),
+        }),
+    });
 };
 
-export const getUserData = async () => {
-    try {
-        const res = await fetch(API_URL + AUTH_USER, {
-            method: 'GET',
-            mode: 'cors',
-            //@ts-ignore
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'authorization': getCookie('accessToken')
-            }
-        });
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+export const getUserData = () => {
+    return fetch(API_URL + AUTH_USER, {
+        method: "GET",
+        mode: "cors",
+        //@ts-ignore
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            authorization: getCookie("accessToken"),
+        },
+    });
 };
 
-export const editUserData = async (userData: {name: string, login: string, password: string}) => {
-    try {
-        const res = await fetch(API_URL + AUTH_USER, {
-            method: 'PATCH',
-            mode: 'cors',
-            //@ts-ignore
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'authorization': getCookie('accessToken')
-            },
-            body: JSON.stringify(userData)
-        });
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
+export const editUserData = (userData: IUser) => {
+    return fetch(API_URL + AUTH_USER, {
+        method: "PATCH",
+        mode: "cors",
+        //@ts-ignore
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            authorization: getCookie("accessToken"),
+        },
+        body: JSON.stringify(userData),
+    });
 };
 
 export const logoutUserData = async () => {
-    try {
-        const res = await fetch(API_URL + LOGOUT_USER, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                token: localStorage.getItem('refreshToken'),
-            })
-        })
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-}
+    return fetch(API_URL + LOGOUT_USER, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+            token: localStorage.getItem("refreshToken"),
+        }),
+    });
+};
+
+export const postOrderData = async (ingredientsIds: string[]) => {
+    return fetch(API_URL + ORDERS, {
+        method: "POST",
+        mode: "cors",
+        //@ts-ignore
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            authorization: getCookie("accessToken"),
+        },
+        body: JSON.stringify({
+            ingredients: ingredientsIds,
+        }),
+    });
+};

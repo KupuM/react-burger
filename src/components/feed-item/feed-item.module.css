@@ -1,0 +1,43 @@
+.wrapper {
+    width: -webkit-calc(100% - 8px);
+    width: -moz-calc(100% - 8px);
+    width: calc(100% - 8px);
+    box-sizing: border-box;
+    background: #1c1c21;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.number {
+    font-family: Iceland, Tahoma, sans-serif;
+    font-size: 28px;
+    line-height: 24px;
+}
+
+.date {
+    align-self: center;
+}
+
+.inner {
+    display: flex;
+    justify-content: space-between;
+}
+
+.totalCost {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}

@@ -3,14 +3,21 @@ import {
     DELETE_BURGER_CONSTRUCTOR_INGREDIENT,
     UPDATE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST,
     DELETE_BURGER_CONSTRUCTOR_INGREDIENTS_LIST
-} from "../actions/burgers";
+} from "../constants/burgers";
+import { IIngredientType } from "../../utils/types";
+import { TBurgerConstructorActions } from "../actions/burger-constructor";
 
-const initialState = {
+type TBurgerConstructorState = {
+    buns: IIngredientType[],
+    otherIngredients: IIngredientType[]
+}
+
+const initialState: TBurgerConstructorState = {
     buns: [],
     otherIngredients: []
 };
 
-const burgerConstructor = (state = initialState, action) => {
+const burgerConstructor = (state = initialState, action: TBurgerConstructorActions) => {
     switch(action.type) {
         case ADD_BURGER_CONSTRUCTOR_INGREDIENT:
             if (action.payload.type === "bun") {
@@ -25,15 +32,6 @@ const burgerConstructor = (state = initialState, action) => {
                 }
             }
         case DELETE_BURGER_CONSTRUCTOR_INGREDIENT:
-            if (action.payload.type === "bun") {
-                return {
-                    buns: [
-                        ...state.buns.slice(0, action.payload),
-                        ...state.buns.slice(action.payload + 1)
-                    ],
-                    otherIngredients: [...state.otherIngredients]
-                }
-            }
             return {
                 buns: [...state.buns],
                 otherIngredients: [

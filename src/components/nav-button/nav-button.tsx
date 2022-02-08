@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useRouteMatch } from "react-router-dom";
 import navButtonStyles from './nav-button.module.css';
 import { NavLink } from "react-router-dom";
-import { INavbarItem } from "../../utils/models";
+import { INavbarItem } from "../../utils/types";
 
 const NavButton: FC<INavbarItem> = (props) => {
     const {title, icon, iconActive, link, isStrictMatch} = props;

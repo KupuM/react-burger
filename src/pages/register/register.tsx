@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import registerStyles from "./register.module.css";
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useHistory} from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { registerUser } from "../../services/actions/user-info";
 
 const Register = () => {
@@ -11,7 +11,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const history: any = useHistory();
-    const loggedIn = useSelector((state: any) => state.userInfo.loggedIn);
+    const loggedIn = useSelector(state => state.userInfo.loggedIn);
 
     const onChangeName = (e: React.ChangeEvent<HTMLInputElement>): void  => {
         setName(e.target.value)

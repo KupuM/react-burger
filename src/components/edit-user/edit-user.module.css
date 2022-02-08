@@ -1,3 +1,7 @@
+.profileForm {
+    width: 480px;
+}
+
 .profileForm > div, .profileForm > button {
     margin-top: 24px;
 }

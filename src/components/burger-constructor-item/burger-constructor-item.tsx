@@ -4,10 +4,10 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 import {
     DELETE_BURGER_CONSTRUCTOR_INGREDIENT,
     BURGER_INGREDIENT_COUNTER_DECREMENT,
-} from "../../services/actions/burgers";
-import { useDispatch } from "react-redux";
+} from "../../services/constants/burgers";
+import { useDispatch } from "../../utils/hooks";
 import { useDrag, useDrop } from "react-dnd";
-import { IIngredientType } from "../../utils/models";
+import { IIngredientType } from "../../utils/types";
 
 interface IBurgerConstructorItemProps {
     item: IIngredientType;

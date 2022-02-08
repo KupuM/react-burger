@@ -1,7 +1,7 @@
 import React from "react";
 import profileNavStyles from './profile-nav.module.css';
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 import { logoutUser } from "../../services/actions/user-info";
 
 const ProfileNav = (): JSX.Element => {
@@ -24,7 +24,7 @@ const ProfileNav = (): JSX.Element => {
             </li>
             <li>
                 <NavLink 
-                    to="/profile/history"
+                    to="/profile/orders"
                     className={`text text_type_main-medium ${profileNavStyles.button} profile-nav`}
                     exact
                 >
