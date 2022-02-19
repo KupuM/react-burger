@@ -1,6 +1,6 @@
 describe('burger-constructor test', () => {
     beforeEach(() => {
-        cy.visit("http://localhost:3005");
+        cy.visit("http://localhost:3000");
     });
 
     it('the page must contain an empty burger constructor', () => {
