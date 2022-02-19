@@ -5,7 +5,7 @@ import Spinner from "../spinner/spinner";
 import ErrorIndicator from "../error-indicator/error-indicator";
 
 interface IOrder {
-    number: string;
+    number: number;
 }
 
 interface IOrderDetailsData {

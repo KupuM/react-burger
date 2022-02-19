@@ -32,7 +32,7 @@ const IngredientsItem: FC<IIngredientsItemProps> = (props) => {
             }}
             className={ingredientsItemStyles.link}
         >
-            <li className={ingredientsItemStyles.item} style={{ opacity }}>
+            <li className={ingredientsItemStyles.item} style={{ opacity }} data-test-id="ingredient-item">
                 {quantity && quantity > 0 ? (
                     <div className={ingredientsItemStyles.count}>
                         <Counter count={quantity} size="default" />

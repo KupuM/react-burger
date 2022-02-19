@@ -82,7 +82,11 @@ const BurgerConstructor: FC<IBurgerConstructorProps> = ({openModal}) => {
       }, [otherIngredients, dispatch]);
 
     return (
-        <section className={`${burgerConstructorStyles.wrapper} mt-25 ${hoverClass}`} ref={dropTarget}>
+        <section 
+            className={`${burgerConstructorStyles.wrapper} mt-25 ${hoverClass}`}
+            ref={dropTarget}
+            data-test-id="burger-constructor"
+        >
             {!buns[0] && <div className="mt-25 mb-2 pr-4">Добавьте ингредиенты</div>}
             <ul className={`${burgerConstructorStyles.topElement} mt-0 mb-2 pr-4`}>
                 {buns[0] && <BurgerConstructorItem item={buns[0]} type={"bun"} position={"top"} />}
@@ -105,7 +109,7 @@ const BurgerConstructor: FC<IBurgerConstructorProps> = ({openModal}) => {
             <div className={burgerConstructorStyles.total}>
                 <p className="text text_type_main-large pr-2">{total}</p>
                 <span className="pr-10"><CurrencyIcon type="primary" /></span>
-                <Button onClick={handleOpenModal} type="primary" size="large">Оформить заказ</Button>
+                <Button onClick={handleOpenModal} type="primary" size="large" data-test-id="button-order">Оформить заказ</Button>
             </div>             
         </section>
     );

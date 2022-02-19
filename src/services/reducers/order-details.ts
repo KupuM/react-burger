@@ -6,6 +6,7 @@ import {
     UPDATE_ORDER_DETAILS_ERROR,
 } from "../constants/burgers";
 
+
 type TOrderDetailsState = {
     updateOrderDetailsRequest: boolean; 
     updateOrderDetailsSuccess: boolean;
@@ -16,7 +17,7 @@ type TOrderDetailsState = {
     postOrderError: boolean;
 }
 
-const initialState: TOrderDetailsState = { 
+export const initialState: TOrderDetailsState = { 
     updateOrderDetailsRequest: false, 
     updateOrderDetailsSuccess: false,
     updateOrderDetailsError: false,
@@ -30,7 +31,7 @@ const initialState: TOrderDetailsState = {
             name: "",
             createdAt: "",
             updatedAt: "",
-            number: "",
+            number: 0,
         }
     },
     postOrderRequest: false,

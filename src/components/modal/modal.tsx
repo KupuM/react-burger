@@ -27,8 +27,8 @@ const Modal: FC<IModalProps> = ({onClose, children}) => {
     return MODAL_ROOT ? createPortal(
         <>
             <ModalOverlay onClose={onClose} />
-            <div className={`${modalStyles.modal} p-10`} onKeyDown={handlePressEscape}>
-                <div className={modalStyles.close}><CloseIcon onClick={onClose} type="primary" /></div>
+            <div className={`${modalStyles.modal} p-10`} onKeyDown={handlePressEscape} data-test-id="modal-window">
+                <div className={modalStyles.close} data-test-id="close-button"><CloseIcon onClick={onClose} type="primary" /></div>
                 {children}
             </div>
         </>,
