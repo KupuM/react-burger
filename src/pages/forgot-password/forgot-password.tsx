@@ -5,7 +5,6 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import { useDispatch, useSelector } from "../../utils/hooks";
 import { passwordReset } from "../../services/actions/user-info";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { getCookie } from "../../utils/cookie";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
