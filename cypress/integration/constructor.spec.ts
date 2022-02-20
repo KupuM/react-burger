@@ -1,6 +1,6 @@
 describe('burger-constructor test', () => {
     beforeEach(() => {
-        cy.visit("http://localhost:3000");
+        cy.visit("http://localhost:3006");
     });
 
     it('the page must contain an empty burger constructor', () => {
@@ -38,11 +38,7 @@ describe('burger-constructor test', () => {
         cy.get('[data-test-id="burger-constructor"]').trigger('drop');
     }
 
-    it('should get the burger', () => {
-        dragAndDropIngredients();
-    });
-
-    it('should open the order modal window', () => {
+    it('should get the burger and open the order modal window', () => {
         dragAndDropIngredients();
         cy.get('[data-test-id="button-order"]').click();
         cy.get('.input_type_email').find('.input__icon').click()
@@ -53,5 +49,6 @@ describe('burger-constructor test', () => {
         cy.wait(20500);
         cy.contains('Ваш заказ начали готовить');
         cy.get('[data-test-id="modal-overlay"]').click(1, 1, { force: true });
+        cy.contains('Ваш заказ начали готовить').should('not.exist')
     });  
 });
