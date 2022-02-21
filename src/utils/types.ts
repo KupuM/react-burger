@@ -103,7 +103,7 @@ export interface IOrder {
     name: string;
     createdAt: string;
     updatedAt: string;
-    number: string;
+    number: number;
 }
   
 export interface IWSMessage {

@@ -16,7 +16,7 @@ interface IWSState {
     totalToday: number;
 }
 
-const initialState: IWSState = {
+export const initialState: IWSState = {
     wsConnectionStart: false,
     wsConnectionSuccess: false,
     orders: [],

@@ -38,7 +38,7 @@ const Login = () => {
                 <PasswordInput onChange={onChangePassword} value={password} name={"password"} />
 
                 {!success && message && <p className={loginStyles.errorMessage}>{message}</p>}
-                <Button type="primary" size="medium">Войти</Button>
+                <Button type="primary" size="medium" data-test-id="button-login">Войти</Button>
 
                 <p className="text text_type_main-default text_color_inactive">
                     Вы — новый пользователь? <Link to='/register' className={loginStyles.link}>Зарегистрироваться</Link>

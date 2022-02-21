@@ -5,13 +5,12 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import { useDispatch, useSelector } from "../../utils/hooks";
 import { passwordReset } from "../../services/actions/user-info";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { getCookie } from "../../utils/cookie";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
     const history: any = useHistory();
-    const { success, message } = useSelector((state) => state.userInfo.passwordReset);
+    const { passwordReset: { success, message }, loggedIn} = useSelector((state) => state.userInfo);
     
     const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value)
@@ -24,7 +23,7 @@ const ForgotPassword = () => {
 
     return (   
         <>
-            {getCookie('accessToken') && <Redirect to={history.location.state?.from || '/'} />}
+            {loggedIn && <Redirect to={history.location.state?.from || '/'} />}
             {success && <Redirect to="/reset-password" /> }
             <form className={`big-input-container ${forgotPasswordStyles.wrapper}`} onSubmit={onSubmitForm}>
                  <h2 className="text text_type_main-medium">Восстановление пароля</h2>

@@ -16,7 +16,7 @@ type burgerIngredientsState = {
     burgerIngredientsData: IIngredientType[];
 };
 
-const initialState: burgerIngredientsState = {
+export const initialState: burgerIngredientsState = {
     burgerIngredientsRequest: false,
     burgerIngredientsSuccess: false,
     burgerIngredientsError: false,

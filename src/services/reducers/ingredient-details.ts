@@ -8,7 +8,7 @@ interface IIngredientDetailsState {
     _id: string;
 };
 
-const initialState: IIngredientDetailsState = {
+export const initialState: IIngredientDetailsState = {
     _id: "",
 };
 

@@ -7,8 +7,7 @@ interface IModalOverlay {
 
 const ModalOverlay: FC<IModalOverlay> = (props) => {
     return (
-        <div className={modalOverlayStyles.overlay} 
-             onClick={props.onClose}>
+        <div className={modalOverlayStyles.overlay} onClick={props.onClose} data-test-id="modal-overlay">
         </div>
     )
 }

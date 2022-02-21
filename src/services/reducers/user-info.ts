@@ -60,7 +60,7 @@ interface IUserInfoState  {
     editUserError: boolean;
 };
 
-const initialState: IUserInfoState = {
+export const initialState: IUserInfoState = {
     registerUserRequest: false,
     registerUserSuccess: false,
     registerUserError: false,
